@@ -1,77 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 class Program
 {
     public static void Main()
     {
-        string s = Console.ReadLine();
-        string[] ss = s.Split(' ');
-        int[] numbers = new int[10];
-        for (int i = 0; i < 10; i++)
+        int count = 0;
+        string[] s = Console.ReadLine().Split(',');
+        string[] ss = Console.ReadLine().Split(',');
+        var dict = new Dictionary<int, string>();
+        for (int i = 0; i<s.Length;i++)
         {
-            numbers[i] = int.Parse(ss[i]);
+            dict.Add(int.Parse(s[i]), ss[i]);
         }
-        Queue<int> player1 = new Queue<int>();
-        Queue<int> player2 = new Queue<int>();
-        for (int i = 0; i < 10; i++)
-            if (i % 2 == 0)
-            {
-                player1.Enqueue(numbers[i]);
-            }
-            else
-            {
-                player2.Enqueue(numbers[i]);
-            }
-        while (player1.Count != 0 || player2.Count != 0)
+        foreach (var x in dict)
         {
-            Console.WriteLine("Игрок1 " + player1.Peek() + " Игрок2 " + player2.Peek());
-            if ((player1.Peek() == 9 && player2.Peek() == 0))
+            if (x.Key >= 40 && x.Key <= 69)
             {
-                player2.Enqueue(player2.Peek());
-                player2.Enqueue(player1.Peek());
-                player2.Dequeue();
-                player1.Dequeue();
+                Console.WriteLine(x.Value);
+                count++;
             }
-            else
-            {
 
-                if (player1.Peek() > player2.Peek())
-                {
-                    player1.Enqueue(player1.Peek());
-                    player1.Enqueue(player2.Peek());
-                    player1.Dequeue();
-                    player2.Dequeue();
-                }
-                else
-                {
-                    if ((player2.Peek() == 9 && player1.Peek() == 0))
-                    {
-                        player1.Enqueue(player1.Peek());
-                        player1.Enqueue(player2.Peek());
-                        player1.Dequeue();
-                        player2.Dequeue();
-                    }
-                    else
-                    {
-                        player2.Enqueue(player2.Peek());
-                        player2.Enqueue(player1.Peek());
-                        player2.Dequeue();
-                        player1.Dequeue();
-                    }
-                }
-            }
-            if (player1.Count == 0 || player2.Count == 0)
-            {
-                if (player1.Count != 0)
-                {
-                    Console.Write("Игрок1");
-                }
-                else
-                {
-                    Console.Write("Игрок2");
-                }
-                break;
-            }
         }
+        if (count == 0)
+
+        {
+            Console.WriteLine("none");
+        }
+
+        /*
+        Учебный отдел вуза получил результаты(в баллах 0–100) комплексного тестирования студентов первого курса.Если студент набрал 60 баллов и больше, то он успешно прошел тестирование.Если студент набрал от 40 до 59 баллов, ему предоставляется возможность пересдать тест.Если студент набрал 39 баллов и меньше, то он направляется на комиссию по отчислению.Выведите студентов, которые имеют возможность пересдачи.Если такие отсутствуют, выведите «none».
+Формат ввода
+Две строки, от 1 до 1 000 элементов в каждой.
+Первая строка входных данных содержит баллы студентов b1, b2, b3,…, bn — целые числа, разделенные запятой(0 ≤ bi ≤ 100) без пробелов.
+Вторая строка содержит фамилии студентов, разделенные запятой без пробелов, каждая фамилия содержит только последовательность английских или русских букв длиной от 1 до 40 символов.Фамилии могут повторяться.Гарантируется корректность данных.
+Гарантируется, что количество фамилий и баллов в двух строках совпадает.
+Формат вывода
+Фамилии студентов, которые получили балл от 40 до 59 и имеют возможность пересдать тест.
+Фамилия каждого студента выводится в отдельной строке.
+Вывести «none», если нет студентов, которым предоставлена возможность пересдачи.
+        */
     }
 }
