@@ -1,44 +1,82 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-class Program
+﻿namespace GeniusIdiotConsoleApp
 {
-    public static void Main()
+    public class Program
     {
-        int count = 0;
-        string[] s = Console.ReadLine().Split(',');
-        string[] ss = Console.ReadLine().Split(',');
-        var dict = new Dictionary<int, string>();
-        for (int i = 0; i<s.Length;i++)
+        static void Main(string[] args)
         {
-            dict.Add(int.Parse(s[i]), ss[i]);
-        }
-        foreach (var x in dict)
-        {
-            if (x.Key >= 40 && x.Key <= 69)
+            Console.WriteLine("Пожалуйста,введите Ваше имя!");
+
+            string userName = Console.ReadLine();
+            while (string.IsNullOrWhiteSpace(userName))
             {
-                Console.WriteLine(x.Value);
-                count++;
+                Console.WriteLine("Имя не может быть пустым. Пожалуйста, представьтесь...");
+                userName = Console.ReadLine();
             }
-
+            string userChoice = "";
+            while (userChoice != "нет")
+            {
+                List<string> questions = GetQuestions();
+                List<int> answers = GetAnswers();
+                int countCorrectAnswers = 0;
+                int countQuestions = questions.Count();
+                Random random = new Random();
+                for (int i = 0; i < countQuestions; i++)
+                {
+                    int randomQuestionsIndex = random.Next(0, questions.Count);
+                    Console.WriteLine($"Вопрос №{i + 1}: {questions[randomQuestionsIndex]}");
+                    string input = Console.ReadLine();
+                    double userAnswer;   //если пользователь введёт дробь
+                    while (!double.TryParse(input, out userAnswer))
+                    {
+                        Console.WriteLine("Пожалуйста, введите число!");
+                        input = Console.ReadLine();
+                    }
+                    if (userAnswer == answers[randomQuestionsIndex])
+                    {
+                        countCorrectAnswers++;
+                    }
+                    questions.RemoveAt(randomQuestionsIndex);
+                    answers.RemoveAt(randomQuestionsIndex);
+                }
+                string[] diagnoses = GetDiagnoses();
+                Console.WriteLine($"{userName}, Вы {diagnoses[countCorrectAnswers]}");
+                Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
+                 userChoice = Console.ReadLine();
+                while (string.IsNullOrWhiteSpace(userChoice))
+                {
+                    Console.WriteLine("Пожалуйста,введите \"да\" или \"нет\"");
+                    userChoice = Console.ReadLine().ToLower();
+                }
+            }
         }
-        if (count == 0)
-
+        static List<string> GetQuestions()
         {
-            Console.WriteLine("none");
+            List<string> result = new List<string>()//не понимаю как надо отформатировать :(
+            {"Сколько будет два плюс два умноженное на два?",
+             "Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?",
+             "На двух руках 10 пальцев. Сколько пальцев на 5 руках?",
+             "Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?",
+             "Пять свечей горело, две потухли. Сколько свечей осталось?"};
+            return result;
         }
+        static List<int> GetAnswers()
+        {
 
-        /*
-        Учебный отдел вуза получил результаты(в баллах 0–100) комплексного тестирования студентов первого курса.Если студент набрал 60 баллов и больше, то он успешно прошел тестирование.Если студент набрал от 40 до 59 баллов, ему предоставляется возможность пересдать тест.Если студент набрал 39 баллов и меньше, то он направляется на комиссию по отчислению.Выведите студентов, которые имеют возможность пересдачи.Если такие отсутствуют, выведите «none».
-Формат ввода
-Две строки, от 1 до 1 000 элементов в каждой.
-Первая строка входных данных содержит баллы студентов b1, b2, b3,…, bn — целые числа, разделенные запятой(0 ≤ bi ≤ 100) без пробелов.
-Вторая строка содержит фамилии студентов, разделенные запятой без пробелов, каждая фамилия содержит только последовательность английских или русских букв длиной от 1 до 40 символов.Фамилии могут повторяться.Гарантируется корректность данных.
-Гарантируется, что количество фамилий и баллов в двух строках совпадает.
-Формат вывода
-Фамилии студентов, которые получили балл от 40 до 59 и имеют возможность пересдать тест.
-Фамилия каждого студента выводится в отдельной строке.
-Вывести «none», если нет студентов, которым предоставлена возможность пересдачи.
-        */
+            List<int> result = new List<int> { 6, 9, 25, 60, 2 };
+            return result;
+        }
+        static string[] GetDiagnoses()
+        {
+            string[] diagnoses = new string[]
+            {
+                "Идиот",
+                "Кретин",
+                "Дурак",
+                "Нормальный",
+                "Талант",
+                "Гений"
+            };
+            return diagnoses;
+        }
     }
 }
