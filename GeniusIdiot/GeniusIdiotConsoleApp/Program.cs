@@ -23,7 +23,7 @@
                     int randomQuestionsIndex = random.Next(0, questions.Count);
                     Console.WriteLine($"Вопрос №{i + 1}: {questions[randomQuestionsIndex]}");
                     string input = Console.ReadLine();
-                    double userAnswer;   //если пользователь введёт дробь
+                    double userAnswer;    
                     while (!double.TryParse(input, out userAnswer))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
@@ -44,7 +44,6 @@
                 var Choice = GetUserChoice(userChoice);
                 if (!Choice)
                 {
-
                     break;
                 }
             }
@@ -61,7 +60,6 @@
         }
         static List<int> GetAnswers()
         {
-
             List<int> result = new List<int> { 6, 9, 25, 60, 2 };
             return result;
         }
