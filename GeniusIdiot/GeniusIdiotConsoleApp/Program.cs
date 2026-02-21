@@ -11,7 +11,7 @@
                 Console.WriteLine("Имя не может быть пустым. Пожалуйста, представьтесь...");
                 userName = Console.ReadLine();
             }
-            while (true) //бесконечный цикл
+            while (true) 
             {
                 List<string> questions = GetQuestions();
                 List<int> answers = GetAnswers();
@@ -51,7 +51,7 @@
         }
         static List<string> GetQuestions()
         {
-            List<string> result = new List<string>()//не понимаю как надо отформатировать :(
+            List<string> result = new List<string>()
             {"Сколько будет два плюс два умноженное на два?",
              "Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?",
              "На двух руках 10 пальцев. Сколько пальцев на 5 руках?",
