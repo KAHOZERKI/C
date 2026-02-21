@@ -11,7 +11,7 @@
                 Console.WriteLine("Имя не может быть пустым. Пожалуйста, представьтесь...");
                 userName = Console.ReadLine();
             }
-            while (true)
+            while (true) //бесконечный цикл
             {
                 List<string> questions = GetQuestions();
                 List<int> answers = GetAnswers();
