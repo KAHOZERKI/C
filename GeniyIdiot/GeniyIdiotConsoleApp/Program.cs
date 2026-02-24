@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Пожалуйста,введите Ваше имя!");
-            string userName = Console.ReadLine();
+           string userName =Console.ReadLine();
             userName = CheckForNullorWhiteSpace(userName);
             while (true)
             {
@@ -19,14 +19,13 @@
                     int randomQuestionsIndex = random.Next(0, questions.Count);
                     Console.WriteLine($"Вопрос №{i + 1}: {questions[randomQuestionsIndex]}");
                     string input = Console.ReadLine();
-                    input= CheckForNullorWhiteSpace(input);
+                    input = CheckForNullorWhiteSpace(input);
                     while (!CheckDigit(input))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
-                        input = Console.ReadLine();
-                        input = CheckForNullorWhiteSpace(input);
+                        input = Console.ReadLine();  
                     }
-                    double userAnswer=Convert.ToDouble(input);
+                    double userAnswer = Convert.ToDouble(input);
                     if (userAnswer == answers[randomQuestionsIndex])
                     {
                         countCorrectAnswers++;
@@ -40,8 +39,8 @@
                 Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
                 string userChoice = Console.ReadLine().ToLower();
                 userChoice = CheckForNullorWhiteSpace(userChoice);
-                bool Choice = GetUserChoice(userChoice);
-                if (Choice)
+                bool choice = GetUserChoice(userChoice);
+                if (choice)
                 {
                     break;
                 }
@@ -90,7 +89,6 @@
         }
         static bool GetUserChoice(string userchoice)
         {
-
             while (userchoice != "да" && userchoice != "нет")
             {
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
@@ -105,7 +103,6 @@
         }
         static bool CheckDigit(string input)
         {
-
             foreach (var symbol in input)
             {
                 if (!char.IsDigit(symbol))
