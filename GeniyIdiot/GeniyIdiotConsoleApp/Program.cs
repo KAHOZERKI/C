@@ -5,12 +5,8 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Пожалуйста,введите Ваше имя!");
-            string userName = Console.ReadLine();
-            while (string.IsNullOrWhiteSpace(userName))
-            {
-                Console.WriteLine("Имя не может быть пустым. Пожалуйста, представьтесь...");
-                userName = Console.ReadLine();
-            }
+           string userName =Console.ReadLine();
+            userName = CheckForNullorWhiteSpace(userName);
             while (true)
             {
                 List<string> questions = GetQuestions();
@@ -23,14 +19,13 @@
                     int randomQuestionsIndex = random.Next(0, questions.Count);
                     Console.WriteLine($"Вопрос №{i + 1}: {questions[randomQuestionsIndex]}");
                     string input = Console.ReadLine();
-                    double userAnswer;
-                    while (!double.TryParse(input, out userAnswer))
+                    input = CheckForNullorWhiteSpace(input);
+                    while (!CheckDigit(input))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
-                        input = Console.ReadLine();
-                        CheckDigit(input);
-
+                        input = Console.ReadLine();  
                     }
+                    double userAnswer = Convert.ToDouble(input);
                     if (userAnswer == answers[randomQuestionsIndex])
                     {
                         countCorrectAnswers++;
@@ -41,10 +36,10 @@
                 string[] diagnoses = GetDiagnoses();
                 Console.WriteLine($"{userName}, Вы {diagnoses[countCorrectAnswers]}");
                 Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
-
-                string userChoice = "";
-                var Choice = GetUserChoice(userChoice);
-                if (!Choice)
+                string userChoice = Console.ReadLine().ToLower();
+                userChoice = CheckForNullorWhiteSpace(userChoice);
+                bool choice = GetUserChoice(userChoice);
+                if (choice)
                 {
                     break;
                 }
@@ -80,34 +75,38 @@
         }
         static bool GetUserChoice(string userchoice)
         {
-            string userChoice = Console.ReadLine();
-            while (string.IsNullOrWhiteSpace(userChoice))
+            while (userchoice != "да" && userchoice != "нет")
             {
-                Console.WriteLine("Пожалуйста,введите \"да\" или \"нет\"");
-                userChoice = Console.ReadLine().ToLower();
+                Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
+                userchoice = Console.ReadLine().ToLower();
+                userchoice = CheckForNullorWhiteSpace(userchoice);
             }
-            if (userChoice == "нет")
-            {
-                return false;
-            }
-            else
+            if (userchoice == "нет")
             {
                 return true;
             }
+            return false;
         }
-        static void CheckDigit(string input)
+        static bool CheckDigit(string input)
         {
-            bool flagIsDigit = true;
             foreach (var symbol in input)
             {
-                while (!char.IsDigit(symbol))
+                if (!char.IsDigit(symbol))
                 {
-                    flagIsDigit = false;
-                    break;
+                    return false;
                 }
-                flagIsDigit = true;
             }
+            return true;
+        }
+        static string CheckForNullorWhiteSpace(string input)
+        {
 
+            while (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Пожалуйста,не оставляйте эту строку пустой");
+                input = Console.ReadLine();
+            }
+            return input;
         }
     }
 }
