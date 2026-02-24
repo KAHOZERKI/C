@@ -23,7 +23,8 @@
                     while (!CheckDigit(input))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
-                        input = Console.ReadLine();  
+                        input = Console.ReadLine();
+                        input = CheckForNullorWhiteSpace(input);
                     }
                     double userAnswer = Convert.ToDouble(input);
                     if (userAnswer == answers[randomQuestionsIndex])
@@ -34,7 +35,8 @@
                     answers.RemoveAt(randomQuestionsIndex);
                 }
                 string[] diagnoses = GetDiagnoses();
-                Console.WriteLine($"{userName}, Вы {diagnoses[countCorrectAnswers]}");
+                int resultUser = GetDiagnosesFromPercent(countQuestions,countCorrectAnswers);
+                Console.WriteLine($"{userName}, Вы {diagnoses[resultUser]}");
                 Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
                 string userChoice = Console.ReadLine().ToLower();
                 userChoice = CheckForNullorWhiteSpace(userChoice);
@@ -72,6 +74,19 @@
                 "Гений"
             };
             return diagnoses;
+        }
+        static int GetDiagnosesFromPercent(int countQuestions, int countCorrectAnswers)
+        {
+            double PercentCorrectAnswers = ((double)countCorrectAnswers / countQuestions) * 100;
+            switch (PercentCorrectAnswers)
+            {
+                case < 20: return 0; break;
+                case < 40: return 1; break;
+                case < 60: return 2; break;
+                case < 80: return 3; break;
+                case < 95: return 4; break;
+                default: return 5; break;
+            }
         }
         static bool GetUserChoice(string userchoice)
         {
