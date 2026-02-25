@@ -44,10 +44,9 @@
                 bool choice = GetUserChoice(userChoice);
                 if (choice)
                 {
-                    string writePath = @"D:\repositor\note.txt";
-                    Directory.CreateDirectory(Path.GetDirectoryName(writePath));
+                    string writePath = "note.txt";
                     string table = string.Format("|| {0,-15} || {1,-15} || {2,-15} ||", "ФИО", "кол-во правильных ответ", "Диагноз");
-                    string userDataForTable = string.Format("|| {0,-15} || {1,15} || {2,15} ||", userName, countCorrectAnswers, diagnoses[digitDiagnoses]);
+                    string userDataForTable = string.Format("|| {0,-15} || {1,15} || {2,15} ||", userName, correctAnswersCount, diagnoses[userResult]);
                     using (StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default))
                     {
                         if (new FileInfo(writePath).Length == 0)
@@ -62,7 +61,7 @@
                     userAnswerForWatchingTable = CheckForNullorWhiteSpace(userAnswerForWatchingTable);
                     if (!GetUserChoice(userAnswerForWatchingTable))
                     {
-                        string path = @"D:\repositor\note.txt";
+                        string path = "note.txt";
                         using (StreamReader sr = new StreamReader(path))
                         {
                             Console.WriteLine(sr.ReadToEnd());
@@ -112,19 +111,6 @@
                     "Гений"
             };
             return diagnoses;
-        }
-        static int GetDiagnosesFromPercent(int countQuestions, int countCorrectAnswers)
-        {
-            double PercentCorrectAnswers = ((double)countCorrectAnswers / countQuestions) * 100;
-            switch (PercentCorrectAnswers)
-            {
-                case < 20: return 0; break;
-                case < 40: return 1; break;
-                case < 60: return 2; break;
-                case < 80: return 3; break;
-                case < 95: return 4; break;
-                default: return 5; break;
-            }
         }
         static bool GetUserChoice(string userChoice)
         {
