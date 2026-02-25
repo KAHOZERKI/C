@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Пожалуйста,введите Ваше имя!");
+            Console.WriteLine("Пожалуйста,введите Ваше ФИО!");
             var userName = Console.ReadLine();
             userName = CheckForNullorWhiteSpace(userName);
             while (true)
