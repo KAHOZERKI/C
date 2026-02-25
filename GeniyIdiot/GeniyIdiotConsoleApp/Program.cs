@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Пожалуйста,введите Ваше имя!");
+            Console.WriteLine("Пожалуйста,введите Ваше ФИО!");
             string userName = Console.ReadLine();
             userName = CheckForNullorWhiteSpace(userName);
             while (true)
@@ -19,14 +19,14 @@
                     int randomQuestionsIndex = random.Next(0, questions.Count);
                     Console.WriteLine($"Вопрос №{i + 1}: {questions[randomQuestionsIndex]}");
                     string input = Console.ReadLine();
-                    input= CheckForNullorWhiteSpace(input);
+                    input = CheckForNullorWhiteSpace(input);
                     while (!CheckDigit(input))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
                         input = Console.ReadLine();
                         input = CheckForNullorWhiteSpace(input);
                     }
-                    double userAnswer=Convert.ToDouble(input);
+                    double userAnswer = Convert.ToDouble(input);
                     if (userAnswer == answers[randomQuestionsIndex])
                     {
                         countCorrectAnswers++;
@@ -43,6 +43,30 @@
                 bool Choice = GetUserChoice(userChoice);
                 if (Choice)
                 {
+                    string writePath = @"D:\repositor\note.txt";
+                    Directory.CreateDirectory(Path.GetDirectoryName(writePath));
+                    string table = string.Format("|| {0,-15} || {1,-15} || {2,-15} ||", "ФИО", "кол-во правильных ответ", "Диагноз");
+                    string userDataForTable = string.Format("|| {0,-15} || {1,15} || {2,15} ||", userName, countCorrectAnswers, diagnoses[digitDiagnoses]);
+                    using (StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default))
+                    {
+                        if (new FileInfo(writePath).Length == 0)
+                        {
+                            sw.WriteLine(table);
+                        }
+                        sw.WriteLine(userDataForTable);
+                    }
+                    Console.WriteLine("Хотите посмотреть результаты тестирования?");
+                    Console.WriteLine("Ответьте да или нет");
+                    string userAnswerForWatchingTable = Console.ReadLine();
+                    userAnswerForWatchingTable = CheckForNullorWhiteSpace(userAnswerForWatchingTable);
+                    if (!GetUserChoice(userAnswerForWatchingTable))
+                    {
+                        string path = @"D:\repositor\note.txt";
+                        using (StreamReader sr = new StreamReader(path))
+                        {
+                            Console.WriteLine(sr.ReadToEnd());
+                        }
+                    }
                     break;
                 }
             }
@@ -50,11 +74,11 @@
         static List<string> GetQuestions()
         {
             List<string> result = new List<string>()
-            {"Сколько будет два плюс два умноженное на два?",
-             "Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?",
-             "На двух руках 10 пальцев. Сколько пальцев на 5 руках?",
-             "Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?",
-             "Пять свечей горело, две потухли. Сколько свечей осталось?"};
+                {"Сколько будет два плюс два умноженное на два?",
+                 "Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?",
+                 "На двух руках 10 пальцев. Сколько пальцев на 5 руках?",
+                 "Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?",
+                 "Пять свечей горело, две потухли. Сколько свечей осталось?"};
             return result;
         }
         static List<int> GetAnswers()
@@ -79,18 +103,17 @@
         {
             string[] diagnoses = new string[]
             {
-                "Идиот",
-                "Кретин",
-                "Дурак",
-                "Нормальный",
-                "Талант",
-                "Гений"
+                    "Идиот",
+                    "Кретин",
+                    "Дурак",
+                    "Нормальный",
+                    "Талант",
+                    "Гений"
             };
             return diagnoses;
         }
         static bool GetUserChoice(string userchoice)
         {
-
             while (userchoice != "да" && userchoice != "нет")
             {
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
@@ -105,7 +128,6 @@
         }
         static bool CheckDigit(string input)
         {
-
             foreach (var symbol in input)
             {
                 if (!char.IsDigit(symbol))
@@ -117,7 +139,6 @@
         }
         static string CheckForNullorWhiteSpace(string input)
         {
-
             while (string.IsNullOrWhiteSpace(input))
             {
                 Console.WriteLine("Пожалуйста,не оставляйте эту строку пустой");
