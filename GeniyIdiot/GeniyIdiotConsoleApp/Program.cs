@@ -122,7 +122,10 @@
                 userChoice = Console.ReadLine().ToLower();
                 userChoice = CheckForNullorWhiteSpace(userChoice);
             }
-            if (userChoice == "нет")
+        }
+        static bool GetUserChoice(string userChoice)
+        {
+            while (userChoice != "да" && userChoice != "нет")
             {
                 return true;
             }
