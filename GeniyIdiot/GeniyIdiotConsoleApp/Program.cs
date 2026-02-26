@@ -114,7 +114,7 @@
             };
             return diagnoses;
         }
-        static bool GetUserChoice(string userChoice)
+        static bool GetUserChoice(string userchoice)
         {
             while (userChoice != "да" && userChoice != "нет")
             {
