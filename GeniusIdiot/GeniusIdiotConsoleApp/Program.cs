@@ -43,7 +43,7 @@
                 userChoice = CheckForNullorWhiteSpace(userChoice);
                 if (!GetUserChoice(userChoice))
                 {
-                    string path = "note.txt";
+                    string path = "note.txt"; //создаём файл в той же директории
                     string table = string.Format("|| {0,-25} || {1,-25} || {2,-10} ||", "ФИО", "кол-во правильных ответ", "Диагноз");
                     string userDataForTable = string.Format("|| {0,-25} || {1,-25} || {2,-10} ||", userName, correctAnswersCount, diagnoses[userResult]);
                     using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
