@@ -41,8 +41,7 @@
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userChoice = Console.ReadLine().ToLower();
                 userChoice = CheckForNullorWhiteSpace(userChoice);
-                bool choice = GetUserChoice(userChoice);
-                if (choice)
+                if (!GetUserChoice(userChoice))
                 {
                     string path = "note.txt";
                     string table = string.Format("|| {0,-25} || {1,-25} || {2,-10} ||", "ФИО", "кол-во правильных ответ", "Диагноз");
@@ -59,7 +58,7 @@
                     Console.WriteLine("Ответьте да или нет");
                     string userAnswerForWatchingTable = Console.ReadLine();
                     userAnswerForWatchingTable = CheckForNullorWhiteSpace(userAnswerForWatchingTable);
-                    if (!GetUserChoice(userAnswerForWatchingTable))
+                    if (GetUserChoice(userAnswerForWatchingTable))
                     {
                         path = "note.txt";
                         using (StreamReader sr = new StreamReader(path))
@@ -122,15 +121,15 @@
                 userChoice = Console.ReadLine().ToLower();
                 userChoice = CheckForNullorWhiteSpace(userChoice);
             }
-        }
-        static bool GetUserChoice(string userChoice)
-        {
-            while (userChoice != "да" && userChoice != "нет")
+            if(userChoice =="да")
             {
                 return true;
             }
-            return false;
-        }
+            else
+            {
+                return false;
+            }
+        }        
         static bool CheckDigit(string input)
         {
             foreach (var symbol in input)
