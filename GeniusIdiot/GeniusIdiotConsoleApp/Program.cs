@@ -146,7 +146,7 @@
             while (string.IsNullOrWhiteSpace(input))
             {
                 Console.WriteLine("Пожалуйста,не оставляйте эту строку пустой");
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
             }
             return input;
         }
