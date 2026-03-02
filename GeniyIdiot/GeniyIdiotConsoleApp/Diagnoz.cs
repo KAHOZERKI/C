@@ -1,6 +1,6 @@
 ﻿namespace GeniusIdiotConsoleApp
 {
-    public class Diagnoz
+    public class UsersResultStorage
     {
         public static string[] GetDiagnoses()
         {
