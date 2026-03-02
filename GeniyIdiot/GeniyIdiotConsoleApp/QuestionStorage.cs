@@ -1,25 +1,24 @@
 ﻿namespace GeniusIdiotConsoleApp
 {
-    public class QuestionStorage //Я не понимаю что сюда можно засунуть и зачем. Вот вроде логика примерно такая,но у нас все новвые объекты создаются в Мэйне
-                                 // и в лист они тоже помещаются в Мэйне
+    public class QuestionStorage
     {
-        /*
-        public static Question Question{ get; set; }
-        public static List<Question> ListOfQuestions { get; set; }
-        public QuestionStorage(Question question, List<Question> listOfQuestions)
-            {
-            Question = question;
-            ListOfQuestions= listOfQuestions;
-            }
-       
-        public static List<Question> AddQuestionToList(List<Question> listOfQuestions, Question question)
-        {
-            listOfQuestions.Add(question);
 
-            return listOfQuestions;
+
+        public List<Question> questions { get; set; }
+
+        static public List<Question> GetQuestionList()
+        {
+            List<Question> questions = new List<Question>();
+            questions.AddRange(
+            new Question("Сколько будет два плюс два умноженное на два?", 6),
+            new Question("Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?", 9),
+            new Question("На двух руках 10 пальцев. Сколько пальцев на 5 руках?", 25),
+            new Question("Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?", 60),
+            new Question("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)
+            );
+            return questions;
         }
-    }
-        */
+
     }
 }
 
