@@ -14,7 +14,7 @@
            
             while (true)
             {
-                List<Question> questions = QuestionStorage.GetQuestionList();
+                var questions = QuestionStorage.GetQuestionList();
                 var correctAnswersCount = 0;
                 var questionsCount = questions.Count;
                 var random = new Random();

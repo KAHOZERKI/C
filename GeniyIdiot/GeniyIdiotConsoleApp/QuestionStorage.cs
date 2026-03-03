@@ -8,7 +8,7 @@
 
         static public List<Question> GetQuestionList()
         {
-            List<Question> questions = new List<Question>();
+            var questions = new List<Question>();
             questions.AddRange(
             new Question("Сколько будет два плюс два умноженное на два?", 6),
             new Question("Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?", 9),
