@@ -1,0 +1,22 @@
+﻿"GeniyIdiotConsoleApp.exe" (CoreCLR: DefaultDomain). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Private.CoreLib.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "D:\repositor\GeniyIdiot\GeniyIdiotConsoleApp\bin\Debug\net10.0\GeniyIdiotConsoleApp.dll". Символы загружены.
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Runtime.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "c:\program files\microsoft visual studio\2022\community\common7\ide\commonextensions\microsoft\hotreload\Microsoft.Extensions.DotNetDeltaApplier.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.IO.Pipes.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Linq.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Collections.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Console.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Threading.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Runtime.InteropServices.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Threading.Overlapped.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Security.AccessControl.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Security.Principal.Windows.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Security.Claims.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Runtime.Loader.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Collections.Concurrent.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+"GeniyIdiotConsoleApp.exe" (CoreCLR: clrhost). Загружено "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.3\System.Text.Encoding.Extensions.dll". Загрузка символов пропущена. Модуль оптимизирован, включен параметр отладчика "Только мой код".
+Поток '.NET TP Worker' (12996) завершился с кодом 0 (0x0).
+Поток '.NET TP Worker' (6224) завершился с кодом 0 (0x0).
+Поток '.NET TP Worker' (10580) завершился с кодом 0 (0x0).
+Поток '.NET TP Worker' (21084) завершился с кодом 0 (0x0).
+Программа "[20756] GeniyIdiotConsoleApp.exe" завершилась с кодом 0 (0x0).
