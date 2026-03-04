@@ -4,14 +4,11 @@
     {
         static void Main(string[] args)
         {
-
             Console.WriteLine("Пожалуйста,введите Ваше ФИО!");
             var userName = Console.ReadLine();
             userName = ActionsWithInputString.CheckForNullorWhiteSpace(userName);
             var uzver = new User(userName);
             var storage = new QuestionStorage();
-            
-           
             while (true)
             {
                 var questions = QuestionStorage.GetQuestionList();
@@ -44,34 +41,20 @@
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userChoice = Console.ReadLine().ToLower();
                 userChoice = ActionsWithInputString.CheckForNullorWhiteSpace(userChoice);
+                FileSystem.WriteSystemFile(userName, correctAnswersCount, diagnoses[userResult]);
+                
+                Console.WriteLine("Хотите посмотреть результаты тестирования?");
+                Console.WriteLine("Ответьте да или нет");
+                string userAnswerForWatchingTable = Console.ReadLine();
+                userAnswerForWatchingTable = ActionsWithInputString.CheckForNullorWhiteSpace(userAnswerForWatchingTable);
+                if (GetUserChoice(userAnswerForWatchingTable))
+                {
+                    FileSystem.ReadSystemFile();
+                }
                 if (!GetUserChoice(userChoice))
                 {
-                    string path = "note.txt";
-                    string table = string.Format("|| {0,-25} || {1,-25} || {2,-10} ||", "ФИО", "кол-во правильных ответ", "Диагноз");
-                    string userDataForTable = string.Format("|| {0,-25} || {1,-25} || {2,-10} ||", userName, correctAnswersCount, diagnoses[userResult]);
-                    using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
-                    {
-                        if (new FileInfo(path).Length == 0)
-                        {
-                            sw.WriteLine(table);
-                        }
-                        sw.WriteLine(userDataForTable);
-                    }
-                    Console.WriteLine("Хотите посмотреть результаты тестирования?");
-                    Console.WriteLine("Ответьте да или нет");
-                    string userAnswerForWatchingTable = Console.ReadLine();
-                    userAnswerForWatchingTable = ActionsWithInputString.CheckForNullorWhiteSpace(userAnswerForWatchingTable);
-                    if (GetUserChoice(userAnswerForWatchingTable))
-                    {
-                        path = "note.txt";
-                        using (StreamReader sr = new StreamReader(path))
-                        {
-                            Console.WriteLine(sr.ReadToEnd());
-                        }
-                    }
                     break;
                 }
-
             }
         }
         public static bool GetUserChoice(string userChoice)
@@ -91,7 +74,7 @@
                 return false;
             }
         }
-
     }
 }
+        
 
