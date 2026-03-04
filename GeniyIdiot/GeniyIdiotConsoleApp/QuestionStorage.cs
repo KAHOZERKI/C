@@ -2,10 +2,6 @@
 {
     public class QuestionStorage
     {
-
-
-        public List<Question> questions { get; set; }
-
         static public List<Question> GetQuestionList()
         {
             var questions = new List<Question>();
