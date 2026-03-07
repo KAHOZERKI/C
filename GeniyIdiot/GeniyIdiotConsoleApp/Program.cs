@@ -37,10 +37,15 @@
                 string[] diagnoses = User.GetDiagnoses();
                 var userResult = User.GetDiagnosesFromPercent(questionsCount, correctAnswersCount);
                 Console.WriteLine($"{userName}, Вы {diagnoses[userResult]}");
+                string path = "note.txt";
+                if (FileSystem.IsEmpty(path))
+                {
+                    string header = string.Format("|| {0,-25} || {1,-25} || {2,-15} ||", "ФИО", "Кол-во ответов", "Диагноз");
+                    FileSystem.Append(path, header);
+                }
                 string userDataForTable = string.Format("|| {0,-25} || {1,-25} || {2,-10} ||", userName, correctAnswersCount, diagnoses[userResult]);
-                StreamWriter sw = FileSystem.WriteSystemFile();
-                sw.WriteLine(userDataForTable);
-                sw.Close();
+                FileSystem.Append(path, userDataForTable);
+                
                 Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userChoice = Console.ReadLine().ToLower();
@@ -51,7 +56,7 @@
                 userAnswerForWatchingTable = ActionsWithInputString.CheckForNullorWhiteSpace(userAnswerForWatchingTable);
                 if (GetUserChoice(userAnswerForWatchingTable))
                 {
-                    string results = FileSystem.ReadSystemFile();
+                    string results = FileSystem.Read(path);
                     Console.WriteLine("\n" + results);
                     Console.WriteLine("---------------------------\n");
                 }
