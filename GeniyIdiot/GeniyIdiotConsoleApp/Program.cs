@@ -34,22 +34,26 @@
                     }
                     questions.RemoveAt(randomQuestionsIndex);
                 }
-                string[] diagnoses = UsersResultStorage.GetDiagnoses();
-                var userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount, correctAnswersCount);
+                string[] diagnoses = User.GetDiagnoses();
+                var userResult = User.GetDiagnosesFromPercent(questionsCount, correctAnswersCount);
                 Console.WriteLine($"{userName}, Вы {diagnoses[userResult]}");
+                string userDataForTable = string.Format("|| {0,-25} || {1,-25} || {2,-10} ||", userName, correctAnswersCount, diagnoses[userResult]);
+                StreamWriter sw = FileSystem.WriteSystemFile();
+                sw.WriteLine(userDataForTable);
+                sw.Close();
                 Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userChoice = Console.ReadLine().ToLower();
                 userChoice = ActionsWithInputString.CheckForNullorWhiteSpace(userChoice);
-                FileSystem.WriteSystemFile(userName, correctAnswersCount, diagnoses[userResult]);
-                
                 Console.WriteLine("Хотите посмотреть результаты тестирования?");
                 Console.WriteLine("Ответьте да или нет");
                 string userAnswerForWatchingTable = Console.ReadLine();
                 userAnswerForWatchingTable = ActionsWithInputString.CheckForNullorWhiteSpace(userAnswerForWatchingTable);
                 if (GetUserChoice(userAnswerForWatchingTable))
                 {
-                    FileSystem.ReadSystemFile();
+                    string results = FileSystem.ReadSystemFile();
+                    Console.WriteLine("\n" + results);
+                    Console.WriteLine("---------------------------\n");
                 }
                 if (!GetUserChoice(userChoice))
                 {
