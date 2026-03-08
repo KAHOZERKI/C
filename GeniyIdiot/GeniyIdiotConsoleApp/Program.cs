@@ -45,7 +45,6 @@
                 }
                 string userDataForTable = string.Format("|| {0,-25} || {1,-25} || {2,-10} ||", userName, correctAnswersCount, diagnoses[userResult]);
                 FileSystem.Append(path, userDataForTable);
-
                 Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userChoice = Console.ReadLine().ToLower();
@@ -60,7 +59,6 @@
                     Console.WriteLine("\n" + results);
                     Console.WriteLine("---------------------------\n");
                 }
-
                 Console.WriteLine($"{uzver.Name},Хотите добавить свой вопрос в базу?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 String userAnswerForGetNewQuestion = Console.ReadLine();
@@ -87,7 +85,6 @@
                 {
                     break;
                 }
-
             }
         }
         public static bool GetUserChoice(string userChoice)
