@@ -45,25 +45,18 @@
                 }
                 string userDataForTable = string.Format("|| {0,-25} || {1,-25} || {2,-10} ||", userName, correctAnswersCount, diagnoses[userResult]);
                 FileSystem.Append(path, userDataForTable);
-
-                Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
-                Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
-                var userChoice = Console.ReadLine().ToLower();
-                userChoice = ActionsWithInputString.CheckForNullorWhiteSpace(userChoice);
                 Console.WriteLine("Хотите посмотреть результаты тестирования?");
-                Console.WriteLine("Ответьте да или нет");
-                string userAnswerForWatchingTable = Console.ReadLine();
-                userAnswerForWatchingTable = ActionsWithInputString.CheckForNullorWhiteSpace(userAnswerForWatchingTable);
+                Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
+                string userAnswerForWatchingTable = Console.ReadLine().ToLower();
                 if (GetUserChoice(userAnswerForWatchingTable))
                 {
                     string results = FileSystem.Read(path);
                     Console.WriteLine("\n" + results);
                     Console.WriteLine("---------------------------\n");
                 }
-
                 Console.WriteLine($"{uzver.Name},Хотите добавить свой вопрос в базу?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
-                String userAnswerForGetNewQuestion = Console.ReadLine();
+                String userAnswerForGetNewQuestion = Console.ReadLine().ToLower();
                 if (GetUserChoice(userAnswerForGetNewQuestion))
                 {
                     Console.WriteLine("Пожалуйста, введите вопрос");
@@ -83,14 +76,16 @@
                     string line = $"{userQuestion}#{userAnswer}";
                     FileSystem.Append(QuestionStorage.pathForQuestion, line);
                 }
+                Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
+                Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
+                var userChoice = Console.ReadLine().ToLower();
                 if (!GetUserChoice(userChoice))
                 {
                     break;
                 }
-
             }
         }
-        public static bool GetUserChoice(string userChoice)
+        public static string ChoozeCorrectAnswer(string userChoice)
         {
             while (userChoice != "да" && userChoice != "нет")
             {
@@ -98,6 +93,11 @@
                 userChoice = Console.ReadLine().ToLower();
                 userChoice = ActionsWithInputString.CheckForNullorWhiteSpace(userChoice);
             }
+            return userChoice;
+        }
+        public static bool GetUserChoice(string userChoice)
+        {
+            userChoice = ChoozeCorrectAnswer(userChoice);
             if (userChoice == "да")
             {
                 return true;
