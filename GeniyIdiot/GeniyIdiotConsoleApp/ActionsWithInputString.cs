@@ -22,6 +22,11 @@
             }
             return true;
         }
+      public  static string GetValidInput()
+        {
+            string input = Console.ReadLine();
+            return ActionsWithInputString.CheckForNullorWhiteSpace(input);
+        }
     }
 }
 
