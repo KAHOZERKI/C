@@ -5,12 +5,12 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Пожалуйста,введите Ваше ФИО!");
-            var userName = Console.ReadLine();
-            userName = ActionsWithInputString.CheckForNullorWhiteSpace(userName);
+
+            var userName = ActionsWithInputString.GetValidInput();
             var uzver = new User(userName);
-            var storage = new QuestionStorage();
             while (true)
             {
+                Console.Clear();
                 var questions = QuestionStorage.GetQuestionList();
                 var correctAnswersCount = 0;
                 var questionsCount = questions.Count;
@@ -19,13 +19,11 @@
                 {
                     var randomQuestionsIndex = random.Next(0, questions.Count);
                     Console.WriteLine($"Вопрос №{i + 1}: {questions[randomQuestionsIndex].Text}");
-                    var input = Console.ReadLine();
-                    input = ActionsWithInputString.CheckForNullorWhiteSpace(input);
+                    var input = ActionsWithInputString.GetValidInput();
                     while (!ActionsWithInputString.CheckDigit(input))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
-                        input = Console.ReadLine();
-                        input = ActionsWithInputString.CheckForNullorWhiteSpace(input);
+                        input = ActionsWithInputString.GetValidInput();
                     }
                     double userAnswer = Convert.ToDouble(input);
                     if (userAnswer == questions[randomQuestionsIndex].Answer)
@@ -60,21 +58,48 @@
                 if (GetUserChoice(userAnswerForGetNewQuestion))
                 {
                     Console.WriteLine("Пожалуйста, введите вопрос");
-                    string userQuestion = Console.ReadLine();
-                    userQuestion = ActionsWithInputString.CheckForNullorWhiteSpace(userQuestion);
+                    string userQuestion = ActionsWithInputString.GetValidInput();
                     Console.WriteLine("Пожалуйста, введите ответ");
-                    string userAnswer = Console.ReadLine();
-                    userAnswer= ActionsWithInputString.CheckForNullorWhiteSpace(userAnswer);
+                    string userAnswer = ActionsWithInputString.GetValidInput();
                     while (!ActionsWithInputString.CheckDigit(userAnswer))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
-                        userAnswer = Console.ReadLine();
-                        userAnswer = ActionsWithInputString.CheckForNullorWhiteSpace(userAnswer);
+                        userAnswer = ActionsWithInputString.GetValidInput();
                     }
                     var newQuestion = new Question(userQuestion, int.Parse(userAnswer));
                     questions.Add(newQuestion);
                     string line = $"{userQuestion}#{userAnswer}";
                     FileSystem.Append(QuestionStorage.pathForQuestion, line);
+                }
+                Console.WriteLine($"{uzver.Name},Хотите удалить вопрос из базы?");
+                Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
+                String userAnswerForDeleteQuestion = Console.ReadLine().ToLower();
+                if (GetUserChoice(userAnswerForDeleteQuestion))
+                {
+                    var currentQuestions = QuestionStorage.GetQuestionList();
+                    for (int i = 0; i < currentQuestions.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {currentQuestions[i].Text}");
+                    }
+                    Console.WriteLine("---------------------------\n");
+                    Console.WriteLine("Напишите номер вопроса,который следует удалить");
+                    string numberOfQuestion = ActionsWithInputString.GetValidInput();
+                    if (ActionsWithInputString.CheckDigit(numberOfQuestion))
+                    {
+                        int index = int.Parse(numberOfQuestion) - 1;
+                        if (index >= 0 && index < currentQuestions.Count)
+                        {
+                            currentQuestions.RemoveAt(index);
+                            QuestionStorage.ClearQuestionsStorage(QuestionStorage.pathForQuestion);
+                            QuestionStorage.GetQuestionsToStorage(currentQuestions);
+                            Console.WriteLine("Вопрос успешно удален!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ошибка: вопроса с таким номером нет в списке.");
+
+                        }
+                    }
                 }
                 Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
@@ -90,8 +115,7 @@
             while (userChoice != "да" && userChoice != "нет")
             {
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
-                userChoice = Console.ReadLine().ToLower();
-                userChoice = ActionsWithInputString.CheckForNullorWhiteSpace(userChoice);
+                userChoice = ActionsWithInputString.GetValidInput().ToLower();
             }
             return userChoice;
         }

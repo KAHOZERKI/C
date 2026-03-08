@@ -38,6 +38,11 @@
                 FileSystem.Append(pathForQuestion, $"{question.Text}#{question.Answer}");
             }
         }
+        public static void ClearQuestionsStorage(string pathForQuestion)
+        {
+            FileSystem.ClearFile(pathForQuestion);
+        }
+       
     }
 }
 
