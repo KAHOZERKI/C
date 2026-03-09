@@ -6,8 +6,9 @@
         {
             Console.WriteLine("Пожалуйста,введите Ваше ФИО!");
 
-            var userName = ActionsWithInputString.GetValidInput();
+            var userName = GetValidInput();
             var uzver = new User(userName);
+
             while (true)
             {
                 Console.Clear();
@@ -19,12 +20,13 @@
                 {
                     var randomQuestionsIndex = random.Next(0, questions.Count);
                     Console.WriteLine($"Вопрос №{i + 1}: {questions[randomQuestionsIndex].Text}");
-                    var input = ActionsWithInputString.GetValidInput();
-                    while (!ActionsWithInputString.CheckDigit(input))
+                    var input = GetValidInput();
+                    while (!CheckDigit(input))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
-                        input = ActionsWithInputString.GetValidInput();
+                        input = GetValidInput();
                     }
+
                     double userAnswer = Convert.ToDouble(input);
                     if (userAnswer == questions[randomQuestionsIndex].Answer)
                     {
@@ -32,48 +34,47 @@
                     }
                     questions.RemoveAt(randomQuestionsIndex);
                 }
-                string[] diagnoses = User.GetDiagnoses();
+
+                var diagnoses = User.GetDiagnoses();
                 var userResult = User.GetDiagnosesFromPercent(questionsCount, correctAnswersCount);
                 Console.WriteLine($"{userName}, Вы {diagnoses[userResult]}");
-                string path = "note.txt";
-                if (FileSystem.IsEmpty(path))
-                {
-                    string header = string.Format("|| {0,-25} || {1,-25} || {2,-15} ||", "ФИО", "Кол-во ответов", "Диагноз");
-                    FileSystem.Append(path, header);
-                }
-                string userDataForTable = string.Format("|| {0,-25} || {1,-25} || {2,-10} ||", userName, correctAnswersCount, diagnoses[userResult]);
-                FileSystem.Append(path, userDataForTable);
+                FileSystem.CreateTable(userName, correctAnswersCount, diagnoses[userResult]);
+
                 Console.WriteLine("Хотите посмотреть результаты тестирования?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
-                string userAnswerForWatchingTable = Console.ReadLine().ToLower();
+                var userAnswerForWatchingTable = Console.ReadLine().ToLower();
                 if (GetUserChoice(userAnswerForWatchingTable))
                 {
-                    string results = FileSystem.Read(path);
+                    var path = "note.txt"; //мне не нравится,что в program пришлось прописать путь хранения.
+                    var results = FileSystem.Read(path);
                     Console.WriteLine("\n" + results);
                     Console.WriteLine("---------------------------\n");
                 }
+
                 Console.WriteLine($"{uzver.Name},Хотите добавить свой вопрос в базу?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
-                String userAnswerForGetNewQuestion = Console.ReadLine().ToLower();
+                var userAnswerForGetNewQuestion = Console.ReadLine().ToLower();
+
                 if (GetUserChoice(userAnswerForGetNewQuestion))
                 {
                     Console.WriteLine("Пожалуйста, введите вопрос");
-                    string userQuestion = ActionsWithInputString.GetValidInput();
+                    var userQuestion = GetValidInput();
                     Console.WriteLine("Пожалуйста, введите ответ");
-                    string userAnswer = ActionsWithInputString.GetValidInput();
-                    while (!ActionsWithInputString.CheckDigit(userAnswer))
+                    var userAnswer = GetValidInput();
+                    while (!CheckDigit(userAnswer))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
-                        userAnswer = ActionsWithInputString.GetValidInput();
+                        userAnswer = GetValidInput();
                     }
                     var newQuestion = new Question(userQuestion, int.Parse(userAnswer));
                     questions.Add(newQuestion);
-                    string line = $"{userQuestion}#{userAnswer}";
+                    var line = $"{userQuestion}#{userAnswer}";
                     FileSystem.Append(QuestionStorage.pathForQuestion, line);
                 }
+
                 Console.WriteLine($"{uzver.Name},Хотите удалить вопрос из базы?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
-                String userAnswerForDeleteQuestion = Console.ReadLine().ToLower();
+                var userAnswerForDeleteQuestion = Console.ReadLine().ToLower();
                 if (GetUserChoice(userAnswerForDeleteQuestion))
                 {
                     var currentQuestions = QuestionStorage.GetQuestionList();
@@ -83,15 +84,15 @@
                     }
                     Console.WriteLine("---------------------------\n");
                     Console.WriteLine("Напишите номер вопроса,который следует удалить");
-                    string numberOfQuestion = ActionsWithInputString.GetValidInput();
-                    if (ActionsWithInputString.CheckDigit(numberOfQuestion))
+                    var numberOfQuestion = GetValidInput();
+                    if (CheckDigit(numberOfQuestion))
                     {
                         int index = int.Parse(numberOfQuestion) - 1;
                         if (index >= 0 && index < currentQuestions.Count)
                         {
                             currentQuestions.RemoveAt(index);
                             QuestionStorage.ClearQuestionsStorage(QuestionStorage.pathForQuestion);
-                            QuestionStorage.GetQuestionsToStorage(currentQuestions);
+                            QuestionStorage.RecordQuestionsToStorage(currentQuestions);
                             Console.WriteLine("Вопрос успешно удален!");
                         }
                         else
@@ -101,6 +102,7 @@
                         }
                     }
                 }
+
                 Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userChoice = Console.ReadLine().ToLower();
@@ -110,18 +112,18 @@
                 }
             }
         }
-        public static string ChoozeCorrectAnswer(string userChoice)
+        public static string ChooseCorrectAnswer(string userChoice)
         {
             while (userChoice != "да" && userChoice != "нет")
             {
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
-                userChoice = ActionsWithInputString.GetValidInput().ToLower();
+                userChoice = GetValidInput().ToLower();
             }
             return userChoice;
         }
         public static bool GetUserChoice(string userChoice)
         {
-            userChoice = ChoozeCorrectAnswer(userChoice);
+            userChoice = ChooseCorrectAnswer(userChoice);
             if (userChoice == "да")
             {
                 return true;
@@ -131,6 +133,32 @@
                 return false;
             }
         }
+        public static string CheckForNullorWhiteSpace(string input)
+        {
+            while (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Пожалуйста,не оставляйте эту строку пустой");
+                input = Console.ReadLine();
+            }
+            return input;
+        }
+        public static bool CheckDigit(string input)
+        {
+            foreach (var symbol in input)
+            {
+                if (!char.IsDigit(symbol))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public static string GetValidInput()
+        {
+            string input = Console.ReadLine();
+            return CheckForNullorWhiteSpace(input);
+        }
+
     }
 }
 
