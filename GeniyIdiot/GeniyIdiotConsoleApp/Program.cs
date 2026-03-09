@@ -8,6 +8,7 @@
 
             var userName = GetValidInput();
             var uzver = new User(userName);
+            var nextString = "\"---------------------------\\n\"";
 
             while (true)
             {
@@ -34,21 +35,18 @@
                     }
                     questions.RemoveAt(randomQuestionsIndex);
                 }
-
-                var diagnoses = User.GetDiagnoses();
-                var userResult = User.GetDiagnosesFromPercent(questionsCount, correctAnswersCount);
+                int userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount,correctAnswersCount);
+                var diagnoses= UsersResultStorage.GetDiagnoses();
                 Console.WriteLine($"{userName}, Вы {diagnoses[userResult]}");
-                FileSystem.CreateTable(userName, correctAnswersCount, diagnoses[userResult]);
+                UsersResultStorage.CreateTable(userName, correctAnswersCount, diagnoses[userResult]);
 
                 Console.WriteLine("Хотите посмотреть результаты тестирования?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userAnswerForWatchingTable = Console.ReadLine().ToLower();
                 if (GetUserChoice(userAnswerForWatchingTable))
                 {
-                    var path = "note.txt"; //мне не нравится,что в program пришлось прописать путь хранения.
-                    var results = FileSystem.Read(path);
-                    Console.WriteLine("\n" + results);
-                    Console.WriteLine("---------------------------\n");
+                    string result= UsersResultStorage.WatchResultTable();
+                    Console.WriteLine(result);
                 }
 
                 Console.WriteLine($"{uzver.Name},Хотите добавить свой вопрос в базу?");
@@ -82,7 +80,7 @@
                     {
                         Console.WriteLine($"{i + 1}. {currentQuestions[i].Text}");
                     }
-                    Console.WriteLine("---------------------------\n");
+                    Console.WriteLine(nextString);
                     Console.WriteLine("Напишите номер вопроса,который следует удалить");
                     var numberOfQuestion = GetValidInput();
                     if (CheckDigit(numberOfQuestion))
