@@ -69,17 +69,6 @@ namespace WinFormsApp1
                 userAnswerTextBox.Focus();
             }
         }
-        private static string GetNewAnswer(string input)
-        {
-            if (string.IsNullOrEmpty(input) || !Check.CheckDigit(input))
-            {
-                MessageBox.Show("¬ведите корректное число (только цифры)!", "ќшибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw new Exception("¬ведите число");
-            }
-            return input;
-        }
-
-
         private void buttonRestart_Click(object sender, EventArgs e)
         {
             Application.Restart();

@@ -19,7 +19,7 @@
            
         public static int GetDiagnosesFromPercent(int QuestionsCount, int countCorrectAnswers)
         {
-            double PercentCorrectAnswers = ((double)countCorrectAnswers / QuestionsCount) * 100;
+            var PercentCorrectAnswers = ((double)countCorrectAnswers / QuestionsCount) * 100;
             switch (PercentCorrectAnswers)
             {
                 case < 20: return 0;
@@ -32,7 +32,7 @@
         }
         public static string[] GetDiagnoses()
         {
-            string[] diagnoses = new string[]
+            var diagnoses = new string[]
             {
                     "Идиот",
                     "Кретин",

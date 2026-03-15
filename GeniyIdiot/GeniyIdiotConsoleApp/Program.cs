@@ -22,7 +22,7 @@ namespace GeniusIdiotConsoleApp
 
                     Console.WriteLine($"Вопрос №{i + 1}: {randomQuestion.Text}");
                     var input = GetValidInput();
-                    while (!CheckDigit(input))
+                    while (!Check.CheckDigit(input))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
                         input = GetValidInput();
@@ -38,7 +38,7 @@ namespace GeniusIdiotConsoleApp
                 Console.WriteLine("Хотите посмотреть результаты тестирования?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userAnswerForWatchingTable = Console.ReadLine().ToLower();
-                if (GetUserChoice(userAnswerForWatchingTable))
+                if (Check.GetUserChoice(userAnswerForWatchingTable))
                 {
                     string result= UsersResultStorage.WatchResultTable();
                     Console.WriteLine(result);
@@ -48,13 +48,13 @@ namespace GeniusIdiotConsoleApp
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userAnswerForGetNewQuestion = Console.ReadLine().ToLower();
 
-                if (GetUserChoice(userAnswerForGetNewQuestion))
+                if (Check.GetUserChoice(userAnswerForGetNewQuestion))
                 {
                     Console.WriteLine("Пожалуйста, введите вопрос");
                     var userQuestion = GetValidInput();
                     Console.WriteLine("Пожалуйста, введите ответ");
                     var userAnswer = GetValidInput();
-                    while (!CheckDigit(userAnswer))
+                    while (!Check.CheckDigit(userAnswer))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
                         userAnswer = GetValidInput();
@@ -68,7 +68,7 @@ namespace GeniusIdiotConsoleApp
                 Console.WriteLine($"{uzver.Name},Хотите удалить вопрос из базы?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userAnswerForDeleteQuestion = Console.ReadLine().ToLower();
-                if (GetUserChoice(userAnswerForDeleteQuestion))
+                if (Check.GetUserChoice(userAnswerForDeleteQuestion))
                 {
                     var currentQuestions = QuestionStorage.GetQuestionList();
                     for (int i = 0; i < currentQuestions.Count; i++)
@@ -78,7 +78,7 @@ namespace GeniusIdiotConsoleApp
                     Console.WriteLine(nextString);
                     Console.WriteLine("Напишите номер вопроса,который следует удалить");
                     var numberOfQuestion = GetValidInput();
-                    if (CheckDigit(numberOfQuestion))
+                    if (Check.CheckDigit(numberOfQuestion))
                     {
                         int index = int.Parse(numberOfQuestion) - 1;
                         if (index >= 0 && index < currentQuestions.Count)
@@ -99,33 +99,13 @@ namespace GeniusIdiotConsoleApp
                 Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userChoice = Console.ReadLine().ToLower();
-                if (!GetUserChoice(userChoice))
+                if (!Check.GetUserChoice(userChoice))
                 {
                     break;
                 }
             }
         }
-        public static string ChooseCorrectAnswer(string userChoice)
-        {
-            while (userChoice != "да" && userChoice != "нет")
-            {
-                Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
-                userChoice = GetValidInput().ToLower();
-            }
-            return userChoice;
-        }
-        public static bool GetUserChoice(string userChoice)
-        {
-            userChoice = ChooseCorrectAnswer(userChoice);
-            if (userChoice == "да")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        //вот эти 2 метода не трогаю,т.к. они у меня взаимодейтсвуют с консолью
         public static string CheckForNullorWhiteSpace(string input)
         {
             while (string.IsNullOrWhiteSpace(input))
@@ -135,22 +115,11 @@ namespace GeniusIdiotConsoleApp
             }
             return input;
         }
-        public static bool CheckDigit(string input)
-        {
-            foreach (var symbol in input)
-            {
-                if (!char.IsDigit(symbol))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+       
         public static string GetValidInput()
         {
             string input = Console.ReadLine();
             return CheckForNullorWhiteSpace(input);
-
         }
 
     }
