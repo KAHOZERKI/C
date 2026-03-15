@@ -54,11 +54,12 @@ namespace WinFormsApp1
             try
             {
                 var input = userAnswerTextBox.Text;
-                var userAnswer = int.Parse(GetNewAnswer(input));
-                if (userAnswer == currentQuestion.Answer)
-                {
-                    User.CorrectRightAnswers++;
-                }
+                 var userAnswer = int.Parse(input);
+
+                 if (userAnswer == currentQuestion.Answer)
+                 {
+                     User.CorrectRightAnswers++;
+                 }
 
                 questions.Remove(currentQuestion);
                 userAnswerTextBox.Clear();
