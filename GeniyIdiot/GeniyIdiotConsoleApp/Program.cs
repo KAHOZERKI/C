@@ -1,4 +1,6 @@
-﻿namespace GeniusIdiotConsoleApp
+﻿using GeniusIdiot.Library;
+
+namespace GeniusIdiotConsoleApp
 {
     public class Program
     {

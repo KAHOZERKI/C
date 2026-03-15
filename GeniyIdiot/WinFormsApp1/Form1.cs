@@ -1,4 +1,4 @@
-using GeniusIdiotConsoleApp;
+using GeniusIdiot.Library;
 namespace WinFormsApp1
 {
     public partial class mainForm : Form
@@ -13,6 +13,7 @@ namespace WinFormsApp1
         {
             InitializeComponent();
             uzver = new User(userName);
+
         }
 
         private void mainForm_Load(object sender, EventArgs e)
@@ -20,15 +21,16 @@ namespace WinFormsApp1
             questions = QuestionStorage.GetQuestionList();
             questionsCount = questions.Count;
             ShowNextQuestion();
-            questionLabel.Text = $"Вопрос № {numberQuestion + 1}";
+            questionLabel.Text = $"Вопрос № {numberQuestion+1}";
+            numberQuestion++;
         }
 
         private void ShowNextQuestion()
         {
             if (questions.Count == 0)
             {
-                int userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount, correctAnswersCount);
-                string[] diagnoses = UsersResultStorage.GetDiagnoses();
+                var userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount, correctAnswersCount);
+                var diagnoses = UsersResultStorage.GetDiagnoses();
 
                 MessageBox.Show($"Игра окончена! {uzver.Name},Вы: {diagnoses[userResult]}");
 
@@ -50,7 +52,7 @@ namespace WinFormsApp1
         {
             try
             {
-                string input = userAnswerTextBox.Text;
+                var input = userAnswerTextBox.Text;
                 var userAnswer = int.Parse(GetNewAnswer(input));
                 if (userAnswer == currentQuestion.Answer)
                 {

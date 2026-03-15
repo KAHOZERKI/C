@@ -1,4 +1,4 @@
-﻿namespace GeniusIdiotConsoleApp
+﻿namespace GeniusIdiot.Library
 {
     public class Question
     {
