@@ -11,18 +11,16 @@ namespace GeniusIdiotConsoleApp
             var userName = GetValidInput();
             var uzver = new User(userName);
             var nextString = "\"---------------------------\\n\"";
-
+            var questionsCount = QuestionStorage.GetQuestionList().Count;
             while (true)
             {
                 Console.Clear();
                 var questions = QuestionStorage.GetQuestionList();
-                var correctAnswersCount = 0;
-                var questionsCount = questions.Count;
-                var random = new Random();
                 for (int i = 0; i < questionsCount; i++)
                 {
-                    var randomQuestionsIndex = random.Next(0, questions.Count);
-                    Console.WriteLine($"Вопрос №{i + 1}: {questions[randomQuestionsIndex].Text}");
+                    var randomQuestion = QuestionStorage.GetRandomQuestion(questions);
+
+                    Console.WriteLine($"Вопрос №{i + 1}: {randomQuestion.Text}");
                     var input = GetValidInput();
                     while (!CheckDigit(input))
                     {
@@ -31,16 +29,16 @@ namespace GeniusIdiotConsoleApp
                     }
 
                     double userAnswer = Convert.ToDouble(input);
-                    if (userAnswer == questions[randomQuestionsIndex].Answer)
+                    if (userAnswer == randomQuestion.Answer)
                     {
-                        correctAnswersCount++;
+                        User.CorrectRightAnswers++;
                     }
-                    questions.RemoveAt(randomQuestionsIndex);
+                    questions.Remove(randomQuestion);
                 }
-                int userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount,correctAnswersCount);
+                var userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount, User.CorrectRightAnswers);
                 var diagnoses= UsersResultStorage.GetDiagnoses();
                 Console.WriteLine($"{userName}, Вы {diagnoses[userResult]}");
-                UsersResultStorage.CreateTable(userName, correctAnswersCount, diagnoses[userResult]);
+                UsersResultStorage.CreateTable(userName, User.CorrectRightAnswers, diagnoses[userResult]);
 
                 Console.WriteLine("Хотите посмотреть результаты тестирования?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");

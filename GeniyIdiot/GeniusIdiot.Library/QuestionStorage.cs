@@ -42,6 +42,12 @@
         {
             FileSystem.ClearFile(pathForQuestion);
         }
+        public static Question GetRandomQuestion(List<Question> questions)
+        {
+            var random = new Random();
+            int randomIndex = random.Next(0, questions.Count);
+            return questions[randomIndex];
+        }
 
     }
 }

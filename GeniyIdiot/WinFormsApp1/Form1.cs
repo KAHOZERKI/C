@@ -40,12 +40,13 @@ namespace WinFormsApp1
                 {
                     MessageBox.Show(UsersResultStorage.WatchResultTable());
                 }
-                return;
+                Application.Exit();
+                
             }
-            var random = new Random();
-            var randomQuestionsIndex = random.Next(0, questions.Count);
-            questionTextLabel.Text = questions[randomQuestionsIndex].Text;
-            currentQuestion = questions[randomQuestionsIndex];
+
+            var randomQuestion = QuestionStorage.GetRandomQuestion(questions);
+            questionTextLabel.Text = randomQuestion.Text;
+            currentQuestion = randomQuestion;
         }
 
         private void nextButton_Click(object sender, EventArgs e)
@@ -56,7 +57,7 @@ namespace WinFormsApp1
                 var userAnswer = int.Parse(GetNewAnswer(input));
                 if (userAnswer == currentQuestion.Answer)
                 {
-                    correctAnswersCount++;
+                    User.CorrectRightAnswers++;
                 }
 
                 questions.Remove(currentQuestion);
