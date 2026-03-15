@@ -1,7 +1,4 @@
 using GeniusIdiotConsoleApp;
-using System;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 namespace WinFormsApp1
 {
     public partial class mainForm : Form
@@ -10,8 +7,8 @@ namespace WinFormsApp1
         private List<Question> questions;
         private Question currentQuestion;
         private int correctAnswersCount;
-        private int countQuestion = 2;
         private int questionsCount;
+        private int numberQuestion;
         public mainForm(string userName)
         {
             InitializeComponent();
@@ -23,6 +20,7 @@ namespace WinFormsApp1
             questions = QuestionStorage.GetQuestionList();
             questionsCount = questions.Count;
             ShowNextQuestion();
+            questionLabel.Text = $"Вопрос № {numberQuestion + 1}";
         }
 
         private void ShowNextQuestion()
@@ -35,8 +33,8 @@ namespace WinFormsApp1
                 MessageBox.Show($"Игра окончена! {uzver.Name},Вы: {diagnoses[userResult]}");
 
                 UsersResultStorage.CreateTable(uzver.Name, correctAnswersCount, diagnoses[userResult]);
-                var dialogresult = MessageBox.Show("Хотите посмотреть таблицу резудьтатов?", "Результат", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogresult == DialogResult.Yes)
+                var dialogResult = MessageBox.Show("Хотите посмотреть таблицу резудьтатов?", "Результат", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialogResult == DialogResult.Yes)
                 {
                     MessageBox.Show(UsersResultStorage.WatchResultTable());
                 }
@@ -61,8 +59,8 @@ namespace WinFormsApp1
 
                 questions.Remove(currentQuestion);
                 userAnswerTextBox.Clear();
-                questionLabel.Text = $"Вопрос № {countQuestion}";
-                countQuestion++;
+                questionLabel.Text = $"Вопрос № {numberQuestion + 1}";
+                numberQuestion++;
                 ShowNextQuestion();
             }
             catch (Exception ex)
@@ -97,9 +95,9 @@ namespace WinFormsApp1
             Application.Restart();
         }
 
-        private void questionTextLabel_Click(object sender, EventArgs e)
+        private void exitButton_Click(object sender, EventArgs e)
         {
-
+            Application.Exit();
         }
     }
 }

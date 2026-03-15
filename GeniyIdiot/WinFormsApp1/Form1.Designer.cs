@@ -33,22 +33,22 @@ namespace WinFormsApp1
             userAnswerTextBox = new TextBox();
             questionTextLabel = new Label();
             nextButton = new Button();
-            restartbutton = new Button();
+            restartButton = new Button();
             exitButton = new Button();
             SuspendLayout();
             // 
             // questionLabel
             // 
             questionLabel.AutoSize = true;
-            questionLabel.Location = new Point(67, 29);
+            questionLabel.Location = new Point(47, 28);
             questionLabel.Name = "questionLabel";
-            questionLabel.Size = new Size(70, 15);
+            questionLabel.Size = new Size(94, 15);
             questionLabel.TabIndex = 0;
-            questionLabel.Text = "Вопрос №1";
+            questionLabel.Text = "Номер вопроса";
             // 
             // userAnswerTextBox
             // 
-            userAnswerTextBox.Location = new Point(67, 90);
+            userAnswerTextBox.Location = new Point(47, 90);
             userAnswerTextBox.Name = "userAnswerTextBox";
             userAnswerTextBox.Size = new Size(136, 23);
             userAnswerTextBox.TabIndex = 1;
@@ -56,17 +56,16 @@ namespace WinFormsApp1
             // 
             // questionTextLabel
             // 
-            questionTextLabel.Location = new Point(67, 55);
+            questionTextLabel.Location = new Point(47, 55);
             questionTextLabel.Name = "questionTextLabel";
             questionTextLabel.Size = new Size(325, 32);
             questionTextLabel.TabIndex = 2;
-            questionTextLabel.Text = "Текст вопрос";
-            questionTextLabel.Click += questionTextLabel_Click;
+            questionTextLabel.Text = "Текст вопроса";
             // 
             // nextButton
             // 
             nextButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            nextButton.Location = new Point(47, 139);
+            nextButton.Location = new Point(47, 145);
             nextButton.Name = "nextButton";
             nextButton.Size = new Size(182, 136);
             nextButton.TabIndex = 3;
@@ -75,24 +74,25 @@ namespace WinFormsApp1
             nextButton.UseVisualStyleBackColor = true;
             nextButton.Click += nextButton_Click;
             // 
-            // restartbutton
+            // restartButton
             // 
-            restartbutton.Location = new Point(47, 299);
-            restartbutton.Name = "restartbutton";
-            restartbutton.Size = new Size(90, 48);
-            restartbutton.TabIndex = 4;
-            restartbutton.Text = "Всё сначала";
-            restartbutton.UseVisualStyleBackColor = true;
-            restartbutton.Click += buttonRestart_Click;
+            restartButton.Location = new Point(47, 299);
+            restartButton.Name = "restartButton";
+            restartButton.Size = new Size(90, 48);
+            restartButton.TabIndex = 4;
+            restartButton.Text = "Всё сначала";
+            restartButton.UseVisualStyleBackColor = true;
+            restartButton.Click += buttonRestart_Click;
             // 
             // exitButton
             // 
-            exitButton.Location = new Point(69, 385);
+            exitButton.Location = new Point(47, 372);
             exitButton.Name = "exitButton";
             exitButton.Size = new Size(75, 23);
             exitButton.TabIndex = 5;
             exitButton.Text = "Выход";
             exitButton.UseVisualStyleBackColor = true;
+            exitButton.Click += exitButton_Click;
             // 
             // mainForm
             // 
@@ -100,7 +100,7 @@ namespace WinFormsApp1
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(424, 465);
             Controls.Add(exitButton);
-            Controls.Add(restartbutton);
+            Controls.Add(restartButton);
             Controls.Add(nextButton);
             Controls.Add(questionTextLabel);
             Controls.Add(userAnswerTextBox);
@@ -119,7 +119,7 @@ namespace WinFormsApp1
         private TextBox userAnswerTextBox;
         private Label questionTextLabel;
         private Button nextButton;
-        private Button restartbutton;
+        private Button restartButton;
         private Button exitButton;
     }
 }
