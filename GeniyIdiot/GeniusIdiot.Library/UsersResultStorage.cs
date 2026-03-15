@@ -3,17 +3,20 @@
     public class UsersResultStorage
 
     {
-        static string path = "note.txt";
-        /*я не могу создать этот метод,т.к. он завязан на currentQuestion.Answer,который в свою очередь задействован в разных методах формы
-         * public static void GetCorrectRightAnswers(string input)
+        static string path = "note.txt"; 
+        
+          public static void GetCorrectRightAnswers(string input,int currentQuestionAnswer )
          {
              var userAnswer = int.Parse(input);
-             if (userAnswer == currentQuestion.Answer)
+             if(!Check.CheckDigit(input))
+                return;
+
+             if (userAnswer == currentQuestionAnswer)
              {
                  User.CorrectRightAnswers++;
              }
          }
-           */
+           
         public static int GetDiagnosesFromPercent(int QuestionsCount, int countCorrectAnswers)
         {
             double PercentCorrectAnswers = ((double)countCorrectAnswers / QuestionsCount) * 100;

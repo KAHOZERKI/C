@@ -27,12 +27,7 @@ namespace GeniusIdiotConsoleApp
                         Console.WriteLine("Пожалуйста, введите число!");
                         input = GetValidInput();
                     }
-
-                    double userAnswer = Convert.ToDouble(input);
-                    if (userAnswer == randomQuestion.Answer)
-                    {
-                        User.CorrectRightAnswers++;
-                    }
+                    UsersResultStorage.GetCorrectRightAnswers(input, randomQuestion.Answer);
                     questions.Remove(randomQuestion);
                 }
                 var userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount, User.CorrectRightAnswers);

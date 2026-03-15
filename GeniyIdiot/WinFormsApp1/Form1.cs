@@ -21,7 +21,7 @@ namespace WinFormsApp1
             questions = QuestionStorage.GetQuestionList();
             questionsCount = questions.Count;
             ShowNextQuestion();
-            questionLabel.Text = $"Вопрос № {numberQuestion+1}";
+            questionLabel.Text = $"Вопрос № {numberQuestion + 1}";
             numberQuestion++;
         }
 
@@ -41,9 +41,7 @@ namespace WinFormsApp1
                     MessageBox.Show(UsersResultStorage.WatchResultTable());
                 }
                 Application.Exit();
-                
             }
-
             var randomQuestion = QuestionStorage.GetRandomQuestion(questions);
             questionTextLabel.Text = randomQuestion.Text;
             currentQuestion = randomQuestion;
@@ -54,13 +52,11 @@ namespace WinFormsApp1
             try
             {
                 var input = userAnswerTextBox.Text;
-                 var userAnswer = int.Parse(input);
-
-                 if (userAnswer == currentQuestion.Answer)
-                 {
-                     User.CorrectRightAnswers++;
-                 }
-
+                if (!Check.CheckDigit(input))
+                {
+                    MessageBox.Show("Введите корректное число (только цифры)!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                UsersResultStorage.GetCorrectRightAnswers(input, currentQuestion.Answer);
                 questions.Remove(currentQuestion);
                 userAnswerTextBox.Clear();
                 questionLabel.Text = $"Вопрос № {numberQuestion + 1}";
@@ -73,26 +69,16 @@ namespace WinFormsApp1
                 userAnswerTextBox.Focus();
             }
         }
-        private string GetNewAnswer(string input)
+        private static string GetNewAnswer(string input)
         {
-            if (string.IsNullOrEmpty(input) || !CheckDigit(input))
+            if (string.IsNullOrEmpty(input) || !Check.CheckDigit(input))
             {
                 MessageBox.Show("Введите корректное число (только цифры)!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw new Exception("Введите число");
             }
             return input;
         }
-        public static bool CheckDigit(string input)
-        {
-            foreach (var symbol in input)
-            {
-                if (!char.IsDigit(symbol))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+
 
         private void buttonRestart_Click(object sender, EventArgs e)
         {
