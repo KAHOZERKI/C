@@ -38,7 +38,7 @@ namespace GeniusIdiotConsoleApp
                 Console.WriteLine("Хотите посмотреть результаты тестирования?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userAnswerForWatchingTable = Console.ReadLine().ToLower();
-                if (Check.GetUserChoice(userAnswerForWatchingTable))
+                if (GetUserChoice(userAnswerForWatchingTable))
                 {
                     string result= UsersResultStorage.WatchResultTable();
                     Console.WriteLine(result);
@@ -48,7 +48,7 @@ namespace GeniusIdiotConsoleApp
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userAnswerForGetNewQuestion = Console.ReadLine().ToLower();
 
-                if (Check.GetUserChoice(userAnswerForGetNewQuestion))
+                if (GetUserChoice(userAnswerForGetNewQuestion))
                 {
                     Console.WriteLine("Пожалуйста, введите вопрос");
                     var userQuestion = GetValidInput();
@@ -68,7 +68,7 @@ namespace GeniusIdiotConsoleApp
                 Console.WriteLine($"{uzver.Name},Хотите удалить вопрос из базы?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userAnswerForDeleteQuestion = Console.ReadLine().ToLower();
-                if (Check.GetUserChoice(userAnswerForDeleteQuestion))
+                if (GetUserChoice(userAnswerForDeleteQuestion))
                 {
                     var currentQuestions = QuestionStorage.GetQuestionList();
                     for (int i = 0; i < currentQuestions.Count; i++)
@@ -99,7 +99,7 @@ namespace GeniusIdiotConsoleApp
                 Console.WriteLine($"{userName}, есть желание попробовать пройти тест еще раз?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
                 var userChoice = Console.ReadLine().ToLower();
-                if (!Check.GetUserChoice(userChoice))
+                if (!GetUserChoice(userChoice))
                 {
                     break;
                 }
@@ -120,6 +120,29 @@ namespace GeniusIdiotConsoleApp
         {
             string input = Console.ReadLine();
             return CheckForNullorWhiteSpace(input);
+        }
+        public static string ChooseCorrectAnswer(string userChoice)
+        {
+
+            while ((userChoice != "да" && userChoice != "нет") || string.IsNullOrEmpty(userChoice))
+            {
+                Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
+                userChoice = Console.ReadLine().ToLower();
+
+            }
+            return userChoice;
+        }
+        public static bool GetUserChoice(string userChoice)
+        {
+            userChoice = ChooseCorrectAnswer(userChoice);
+            if (userChoice == "да")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }
