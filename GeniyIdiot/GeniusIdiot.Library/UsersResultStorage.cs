@@ -1,13 +1,25 @@
-﻿namespace GeniusIdiotConsoleApp
+﻿namespace GeniusIdiot.Library
 {
     public class UsersResultStorage
 
     {
-        static string path = "note.txt";
+        static string path = "note.txt"; 
+        
+          public static void GetCorrectRightAnswers(string input,int currentQuestionAnswer )
+         {
+             var userAnswer = int.Parse(input);
+             if(!Check.CheckDigit(input))
+                return;
 
+             if (userAnswer == currentQuestionAnswer)
+             {
+                 User.CorrectRightAnswers++;
+             }
+         }
+           
         public static int GetDiagnosesFromPercent(int QuestionsCount, int countCorrectAnswers)
         {
-            double PercentCorrectAnswers = ((double)countCorrectAnswers / QuestionsCount) * 100;
+            var PercentCorrectAnswers = ((double)countCorrectAnswers / QuestionsCount) * 100;
             switch (PercentCorrectAnswers)
             {
                 case < 20: return 0;
@@ -20,7 +32,7 @@
         }
         public static string[] GetDiagnoses()
         {
-            string[] diagnoses = new string[]
+            var diagnoses = new string[]
             {
                     "Идиот",
                     "Кретин",

@@ -1,4 +1,6 @@
-﻿namespace GeniusIdiotConsoleApp
+﻿using GeniusIdiot.Library;
+
+namespace GeniusIdiotConsoleApp
 {
     public class Program
     {
@@ -9,36 +11,29 @@
             var userName = GetValidInput();
             var uzver = new User(userName);
             var nextString = "\"---------------------------\\n\"";
-
+            var questionsCount = QuestionStorage.GetQuestionList().Count;
             while (true)
             {
                 Console.Clear();
                 var questions = QuestionStorage.GetQuestionList();
-                var correctAnswersCount = 0;
-                var questionsCount = questions.Count;
-                var random = new Random();
                 for (int i = 0; i < questionsCount; i++)
                 {
-                    var randomQuestionsIndex = random.Next(0, questions.Count);
-                    Console.WriteLine($"Вопрос №{i + 1}: {questions[randomQuestionsIndex].Text}");
+                    var randomQuestion = QuestionStorage.GetRandomQuestion(questions);
+
+                    Console.WriteLine($"Вопрос №{i + 1}: {randomQuestion.Text}");
                     var input = GetValidInput();
-                    while (!CheckDigit(input))
+                    while (!Check.CheckDigit(input))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
                         input = GetValidInput();
                     }
-
-                    double userAnswer = Convert.ToDouble(input);
-                    if (userAnswer == questions[randomQuestionsIndex].Answer)
-                    {
-                        correctAnswersCount++;
-                    }
-                    questions.RemoveAt(randomQuestionsIndex);
+                    UsersResultStorage.GetCorrectRightAnswers(input, randomQuestion.Answer);
+                    questions.Remove(randomQuestion);
                 }
-                int userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount,correctAnswersCount);
+                var userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount, User.CorrectRightAnswers);
                 var diagnoses= UsersResultStorage.GetDiagnoses();
                 Console.WriteLine($"{userName}, Вы {diagnoses[userResult]}");
-                UsersResultStorage.CreateTable(userName, correctAnswersCount, diagnoses[userResult]);
+                UsersResultStorage.CreateTable(userName, User.CorrectRightAnswers, diagnoses[userResult]);
 
                 Console.WriteLine("Хотите посмотреть результаты тестирования?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
@@ -59,7 +54,7 @@
                     var userQuestion = GetValidInput();
                     Console.WriteLine("Пожалуйста, введите ответ");
                     var userAnswer = GetValidInput();
-                    while (!CheckDigit(userAnswer))
+                    while (!Check.CheckDigit(userAnswer))
                     {
                         Console.WriteLine("Пожалуйста, введите число!");
                         userAnswer = GetValidInput();
@@ -83,7 +78,7 @@
                     Console.WriteLine(nextString);
                     Console.WriteLine("Напишите номер вопроса,который следует удалить");
                     var numberOfQuestion = GetValidInput();
-                    if (CheckDigit(numberOfQuestion))
+                    if (Check.CheckDigit(numberOfQuestion))
                     {
                         int index = int.Parse(numberOfQuestion) - 1;
                         if (index >= 0 && index < currentQuestions.Count)
@@ -110,12 +105,30 @@
                 }
             }
         }
+        //вот эти 2 метода не трогаю,т.к. они у меня взаимодейтсвуют с консолью
+        public static string CheckForNullorWhiteSpace(string input)
+        {
+            while (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Пожалуйста,не оставляйте эту строку пустой");
+                input = Console.ReadLine();
+            }
+            return input;
+        }
+       
+        public static string GetValidInput()
+        {
+            string input = Console.ReadLine();
+            return CheckForNullorWhiteSpace(input);
+        }
         public static string ChooseCorrectAnswer(string userChoice)
         {
-            while (userChoice != "да" && userChoice != "нет")
+
+            while ((userChoice != "да" && userChoice != "нет") || string.IsNullOrEmpty(userChoice))
             {
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
-                userChoice = GetValidInput().ToLower();
+                userChoice = Console.ReadLine().ToLower();
+
             }
             return userChoice;
         }
@@ -130,31 +143,6 @@
             {
                 return false;
             }
-        }
-        public static string CheckForNullorWhiteSpace(string input)
-        {
-            while (string.IsNullOrWhiteSpace(input))
-            {
-                Console.WriteLine("Пожалуйста,не оставляйте эту строку пустой");
-                input = Console.ReadLine();
-            }
-            return input;
-        }
-        public static bool CheckDigit(string input)
-        {
-            foreach (var symbol in input)
-            {
-                if (!char.IsDigit(symbol))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        public static string GetValidInput()
-        {
-            string input = Console.ReadLine();
-            return CheckForNullorWhiteSpace(input);
         }
 
     }
