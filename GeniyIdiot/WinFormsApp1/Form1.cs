@@ -38,7 +38,7 @@ namespace WinFormsApp1
                 var dialogResult = MessageBox.Show("Хотите посмотреть таблицу резудьтатов?", "Результат", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    MessageBox.Show(UsersResultStorage.WatchResultTable());
+                    MessageBox.Show(UsersResultStorage.WatchResultTable()); //повторяется в коде
                 }
                 Application.Exit();
             }
@@ -77,6 +77,11 @@ namespace WinFormsApp1
         private void exitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void lookResultTable_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(UsersResultStorage.WatchResultTable()); //повторяется в коде
         }
     }
 }

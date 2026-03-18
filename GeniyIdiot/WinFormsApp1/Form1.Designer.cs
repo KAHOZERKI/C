@@ -29,13 +29,48 @@ namespace WinFormsApp1
         /// </summary>
         private void InitializeComponent()
         {
+            ToolStripMenuItem менюToolStripMenuItem;
+            restart = new ToolStripMenuItem();
+            exit = new ToolStripMenuItem();
+            lookResultTable = new ToolStripMenuItem();
             questionLabel = new Label();
             userAnswerTextBox = new TextBox();
             questionTextLabel = new Label();
             nextButton = new Button();
             restartButton = new Button();
             exitButton = new Button();
+            menuStrip1 = new MenuStrip();
+            менюToolStripMenuItem = new ToolStripMenuItem();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
+            // 
+            // менюToolStripMenuItem
+            // 
+            менюToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { restart, exit, lookResultTable });
+            менюToolStripMenuItem.Name = "менюToolStripMenuItem";
+            менюToolStripMenuItem.Size = new Size(53, 20);
+            менюToolStripMenuItem.Text = "Меню";
+            // 
+            // restart
+            // 
+            restart.Name = "restart";
+            restart.Size = new Size(302, 22);
+            restart.Text = "Перезапустить приложение";
+            restart.Click += buttonRestart_Click;
+            // 
+            // exit
+            // 
+            exit.Name = "exit";
+            exit.Size = new Size(302, 22);
+            exit.Text = "Выйти из приложения";
+            exit.Click += exitButton_Click;
+            // 
+            // lookResultTable
+            // 
+            lookResultTable.Name = "lookResultTable";
+            lookResultTable.Size = new Size(302, 22);
+            lookResultTable.Text = "Посмотреть предыдущие результаты игр";
+            lookResultTable.Click += lookResultTable_Click;
             // 
             // questionLabel
             // 
@@ -94,6 +129,15 @@ namespace WinFormsApp1
             exitButton.UseVisualStyleBackColor = true;
             exitButton.Click += exitButton_Click;
             // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { менюToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(424, 24);
+            menuStrip1.TabIndex = 6;
+            menuStrip1.Text = "menuStrip1";
+            // 
             // mainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -105,9 +149,13 @@ namespace WinFormsApp1
             Controls.Add(questionTextLabel);
             Controls.Add(userAnswerTextBox);
             Controls.Add(questionLabel);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "mainForm";
             Text = "ГенийИдиот";
             Load += mainForm_Load;
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -121,5 +169,9 @@ namespace WinFormsApp1
         private Button nextButton;
         private Button restartButton;
         private Button exitButton;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem restart;
+        private ToolStripMenuItem exit;
+        private ToolStripMenuItem lookResultTable;
     }
 }
