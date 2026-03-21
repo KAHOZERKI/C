@@ -3,11 +3,15 @@
     public class User
     {
         public string Name { get; set; }
-        public static int CorrectRightAnswers { get; set; }
+        public int CorrectRightAnswers { get; set; }
+        public string Diagnosis { get; set; }
+
         public User(string name)
         {
             Name = name;
+            CorrectRightAnswers = 0;
         }
+        public User() { }
     }
 }
 

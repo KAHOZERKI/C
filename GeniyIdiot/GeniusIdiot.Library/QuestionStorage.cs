@@ -1,8 +1,10 @@
-﻿namespace GeniusIdiot.Library
+﻿using Newtonsoft.Json;
+
+namespace GeniusIdiot.Library
 {
     public class QuestionStorage
     {
-        public static string pathForQuestion = "questions.txt";
+        public static string pathForQuestion = "questions.json";
         static public List<Question> GetQuestionList()
         {
             if (FileSystem.IsEmpty(pathForQuestion))
@@ -18,25 +20,20 @@
                 RecordQuestionsToStorage(questions);
                 return questions;
             }
-            else
-            {
-                var questions = new List<Question>();
+                
                 string allQuestions = FileSystem.Read(pathForQuestion);
-                string[] lines = allQuestions.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-                foreach (string line in lines)
-                {
-                    string[] massiveOfQuestion = line.Split('#');
-                    questions.Add(new Question(massiveOfQuestion[0].Trim(), int.Parse(massiveOfQuestion[1].Trim())));
-                }
-                return questions;
+            var results = JsonConvert.DeserializeObject<List<Question>>(allQuestions);
+            if (results == null)
+            {
+                return new List<Question>();
             }
+            return results;
+
         }
         public static void RecordQuestionsToStorage(List<Question> questions)
         {
-            foreach (var question in questions)
-            {
-                FileSystem.Append(pathForQuestion, $"{question.Text}#{question.Answer}");
-            }
+            var json = JsonConvert.SerializeObject(questions, Formatting.Indented);
+            FileSystem.Append(pathForQuestion, json);
         }
         public static void ClearQuestionsStorage(string pathForQuestion)
         {

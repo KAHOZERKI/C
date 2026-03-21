@@ -5,7 +5,7 @@
 
         public static void Append(string path, string text)
         {
-            StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default);
+            StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.Default);
             sw.WriteLine(text);
             sw.Close();
         }

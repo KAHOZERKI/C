@@ -6,7 +6,6 @@ namespace WinFormsApp1
         private User uzver;
         private List<Question> questions;
         private Question currentQuestion;
-        private int correctAnswersCount;
         private int questionsCount;
         private int numberQuestion;
         public mainForm(string userName)
@@ -29,18 +28,19 @@ namespace WinFormsApp1
         {
             if (questions.Count == 0)
             {
-                var userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount, correctAnswersCount);
+                var userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount, uzver.CorrectRightAnswers);
                 var diagnoses = UsersResultStorage.GetDiagnoses();
 
                 MessageBox.Show($"Игра окончена! {uzver.Name},Вы: {diagnoses[userResult]}");
 
-                UsersResultStorage.CreateTable(uzver.Name, correctAnswersCount, diagnoses[userResult]);
+                UsersResultStorage.CreateTable(uzver.Name, uzver.CorrectRightAnswers, diagnoses[userResult]);
                 var dialogResult = MessageBox.Show("Хотите посмотреть таблицу резудьтатов?", "Результат", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    MessageBox.Show(UsersResultStorage.WatchResultTable()); //повторяется в коде
+                    MessageBox.Show(UsersResultStorage.WatchResultTable()); 
                 }
                 Application.Exit();
+                return;
             }
             var randomQuestion = QuestionStorage.GetRandomQuestion(questions);
             questionTextLabel.Text = randomQuestion.Text;
@@ -55,8 +55,9 @@ namespace WinFormsApp1
                 if (!Check.CheckDigit(input))
                 {
                     MessageBox.Show("Введите корректное число (только цифры)!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
-                UsersResultStorage.GetCorrectRightAnswers(input, currentQuestion.Answer);
+                UsersResultStorage.GetCorrectRightAnswers(input, currentQuestion.Answer,uzver);
                 questions.Remove(currentQuestion);
                 userAnswerTextBox.Clear();
                 questionLabel.Text = $"Вопрос № {numberQuestion + 1}";
@@ -81,7 +82,7 @@ namespace WinFormsApp1
 
         private void lookResultTable_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(UsersResultStorage.WatchResultTable()); //повторяется в коде
+            MessageBox.Show(UsersResultStorage.WatchResultTable()); 
         }
     }
 }
