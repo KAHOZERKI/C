@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Linq;
 namespace GeniusIdiot.Library
 {
     public class UsersResultStorage
@@ -77,8 +76,8 @@ namespace GeniusIdiot.Library
         public static string WatchResultTable()
         {
             var results = GetAllResults();
-            var header = string.Format("|| {0,-25} || {1,-25} || {2,-15} ||\n", "ФИО", "Кол-во ответов", "Диагноз");
-            var rows = results.Select(u=>string.Format("|| {0,-25} || {1,-25} || {2,-15} ||\n",u.Name, u.CorrectRightAnswers, u.Diagnosis));
+            var header = string.Format("|| {0,-25} || {1,-25} || {2,-25} ||\n", "ФИО", "Кол-во ответов", "Диагноз");
+            var rows = results.Select(u=>string.Format("|| {0,-25} || {1,-25} || {2,-25} ||\n",u.Name, u.CorrectRightAnswers, u.Diagnosis));
            return header + string.Join("", rows); 
         }
     }

@@ -3,7 +3,7 @@
     <Build Solution="Debug|*" Project="false" />
   </Project>
   <Project Path="GeniyIdiotConsoleApp/GeniyIdiotConsoleApp.csproj" />
-  <Project Path="WinFormsApp1/WinFormsApp1.csproj" Id="b3d416da-0249-4213-a340-47c8be1fc26c">
+  <Project Path="WinFormsApp1/GeniyIdiot.WinForm.csproj" Id="b3d416da-0249-4213-a340-47c8be1fc26c">
     <Build Solution="Debug|*" Project="false" />
   </Project>
 </Solution>

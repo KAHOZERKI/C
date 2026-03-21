@@ -4,10 +4,10 @@ namespace GeniusIdiot.Library
 {
     public class QuestionStorage
     {
-        public static string pathForQuestion = "questions.json";
+        public static string path = "questions.json";
         static public List<Question> GetQuestionList()
         {
-            if (FileSystem.IsEmpty(pathForQuestion))
+            if (FileSystem.IsEmpty(path))
             {
                 var questions = new List<Question>()
                 {
@@ -21,7 +21,7 @@ namespace GeniusIdiot.Library
                 return questions;
             }
                 
-                string allQuestions = FileSystem.Read(pathForQuestion);
+                string allQuestions = FileSystem.Read(path);
             var results = JsonConvert.DeserializeObject<List<Question>>(allQuestions);
             if (results == null)
             {
@@ -33,7 +33,7 @@ namespace GeniusIdiot.Library
         public static void RecordQuestionsToStorage(List<Question> questions)
         {
             var json = JsonConvert.SerializeObject(questions, Formatting.Indented);
-            FileSystem.Append(pathForQuestion, json);
+            FileSystem.Append(path, json);
         }
         public static void ClearQuestionsStorage(string pathForQuestion)
         {
