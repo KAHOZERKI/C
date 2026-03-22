@@ -1,5 +1,4 @@
-﻿
-using GeniusIdiot.Library;
+﻿using GeniusIdiot.Library;
 namespace GeniyIdiot.WinForm
 {
     public partial class resultsForm : Form
@@ -10,7 +9,6 @@ namespace GeniyIdiot.WinForm
             LoadResults();
         }
         public void LoadResults()
-
         {
             resultsBox.Rows.Clear();
             var results = UsersResultStorage.GetAllResults();
@@ -19,7 +17,6 @@ namespace GeniyIdiot.WinForm
                 resultsBox.Rows.Add(user.Name, user.CorrectRightAnswers, user.Diagnosis);
             }
         }
-
         private void closeButton_Click(object sender, EventArgs e)
         {
             this.Close();
