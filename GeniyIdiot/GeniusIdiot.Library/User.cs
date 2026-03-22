@@ -11,7 +11,6 @@
             Name = name;
             CorrectRightAnswers = 0;
         }
-        public User() { }
     }
 }
 

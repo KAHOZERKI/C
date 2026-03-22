@@ -9,8 +9,6 @@
             Text = text;
             Answer = answer;
         }
-        public Question() { }
-
     }
 }
 
