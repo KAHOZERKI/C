@@ -1,4 +1,5 @@
 using GeniusIdiot.Library;
+using GeniyIdiot.WinForm;
 namespace WinFormsApp1
 {
     public partial class mainForm : Form
@@ -37,8 +38,11 @@ namespace WinFormsApp1
                 var dialogResult = MessageBox.Show("Хотите посмотреть таблицу резудьтатов?", "Результат", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    MessageBox.Show(UsersResultStorage.WatchResultTable()); 
+                    
+                    resultsForm window = new resultsForm();
+                    window.ShowDialog();
                 }
+
                 Application.Exit();
                 return;
             }
@@ -57,7 +61,7 @@ namespace WinFormsApp1
                     MessageBox.Show("Введите корректное число (только цифры)!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                UsersResultStorage.GetCorrectRightAnswers(input, currentQuestion.Answer,uzver);
+                UsersResultStorage.GetCorrectRightAnswers(input, currentQuestion.Answer, uzver);
                 questions.Remove(currentQuestion);
                 userAnswerTextBox.Clear();
                 questionLabel.Text = $"Вопрос № {numberQuestion + 1}";
@@ -82,7 +86,13 @@ namespace WinFormsApp1
 
         private void lookResultTable_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(UsersResultStorage.WatchResultTable()); 
+            MessageBox.Show(UsersResultStorage.WatchResultTable());
         }
+
+        private void resultsBox_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+           
+        }
+        
     }
 }

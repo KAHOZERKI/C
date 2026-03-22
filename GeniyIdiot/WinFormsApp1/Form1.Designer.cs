@@ -134,7 +134,7 @@ namespace WinFormsApp1
             menuStrip1.Items.AddRange(new ToolStripItem[] { менюToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(424, 24);
+            menuStrip1.Size = new Size(749, 24);
             menuStrip1.TabIndex = 6;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -142,7 +142,7 @@ namespace WinFormsApp1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(424, 465);
+            ClientSize = new Size(749, 482);
             Controls.Add(exitButton);
             Controls.Add(restartButton);
             Controls.Add(nextButton);

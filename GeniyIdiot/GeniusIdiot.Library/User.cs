@@ -2,6 +2,7 @@
 {
     public class User
     {
+        public User() { }
         public string Name { get; set; }
         public int CorrectRightAnswers { get; set; }
         public string Diagnosis { get; set; }
