@@ -27,8 +27,10 @@ namespace WinFormsApp1
 
         private void ShowNextQuestion()
         {
+           
             if (questions.Count == 0)
             {
+                
                 var userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount, uzver.CorrectRightAnswers);
                 var diagnoses = UsersResultStorage.GetDiagnoses();
 
@@ -42,9 +44,9 @@ namespace WinFormsApp1
                     resultsForm window = new resultsForm();
                     window.ShowDialog();
                 }
-
+              
                 Application.Exit();
-                return;
+                return; 
             }
             var randomQuestion = QuestionStorage.GetRandomQuestion(questions);
             questionTextLabel.Text = randomQuestion.Text;
@@ -53,6 +55,12 @@ namespace WinFormsApp1
 
         private void nextButton_Click(object sender, EventArgs e)
         {
+            if (currentQuestion == null)
+            {
+                MessageBox.Show("Вопрос не загружен. Возможно, список вопросов пуст.");
+                return;
+            }
+
             try
             {
                 var input = userAnswerTextBox.Text;
@@ -64,9 +72,14 @@ namespace WinFormsApp1
                 UsersResultStorage.GetCorrectRightAnswers(input, currentQuestion.Answer, uzver);
                 questions.Remove(currentQuestion);
                 userAnswerTextBox.Clear();
-                questionLabel.Text = $"Вопрос № {numberQuestion + 1}";
-                numberQuestion++;
                 ShowNextQuestion();
+                if (questions.Count > 0)
+                {
+                    questionLabel.Text = $"Вопрос № {numberQuestion + 1}";
+
+                    numberQuestion++;
+                }
+               
             }
             catch (Exception ex)
             {
@@ -87,12 +100,6 @@ namespace WinFormsApp1
         private void lookResultTable_Click(object sender, EventArgs e)
         {
             MessageBox.Show(UsersResultStorage.WatchResultTable());
-        }
-
-        private void resultsBox_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-           
-        }
-        
+        } 
     }
 }
