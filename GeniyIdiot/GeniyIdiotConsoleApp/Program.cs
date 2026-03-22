@@ -9,13 +9,13 @@ namespace GeniusIdiotConsoleApp
             Console.WriteLine("Пожалуйста,введите Ваше ФИО!");
 
             var userName = GetValidInput();
-            var uzver = new User(userName);
-            var nextString = "\"---------------------------\\n\"";
-            var questionsCount = QuestionStorage.GetQuestionList().Count;
+            var nextString = "\"---------------------------\\n\"";   
             while (true)
             {
                 Console.Clear();
+                var uzver = new User(userName);
                 var questions = QuestionStorage.GetQuestionList();
+                var questionsCount = QuestionStorage.GetQuestionList().Count;
                 for (int i = 0; i < questionsCount; i++)
                 {
                     var randomQuestion = QuestionStorage.GetRandomQuestion(questions);
@@ -27,13 +27,13 @@ namespace GeniusIdiotConsoleApp
                         Console.WriteLine("Пожалуйста, введите число!");
                         input = GetValidInput();
                     }
-                    UsersResultStorage.GetCorrectRightAnswers(input, randomQuestion.Answer);
+                    UsersResultStorage.GetCorrectRightAnswers(input, randomQuestion.Answer,uzver);
                     questions.Remove(randomQuestion);
                 }
-                var userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount, User.CorrectRightAnswers);
+                var userResult = UsersResultStorage.GetDiagnosesFromPercent(questionsCount, uzver.CorrectRightAnswers);
                 var diagnoses= UsersResultStorage.GetDiagnoses();
                 Console.WriteLine($"{userName}, Вы {diagnoses[userResult]}");
-                UsersResultStorage.CreateTable(userName, User.CorrectRightAnswers, diagnoses[userResult]);
+                UsersResultStorage.CreateTable(userName, uzver.CorrectRightAnswers, diagnoses[userResult]);
 
                 Console.WriteLine("Хотите посмотреть результаты тестирования?");
                 Console.WriteLine("Пожалуйста, введите ДА или НЕТ");
@@ -51,7 +51,7 @@ namespace GeniusIdiotConsoleApp
                 if (GetUserChoice(userAnswerForGetNewQuestion))
                 {
                     Console.WriteLine("Пожалуйста, введите вопрос");
-                    var userQuestion = GetValidInput();
+                    var userQuestionText = GetValidInput();
                     Console.WriteLine("Пожалуйста, введите ответ");
                     var userAnswer = GetValidInput();
                     while (!Check.CheckDigit(userAnswer))
@@ -59,10 +59,13 @@ namespace GeniusIdiotConsoleApp
                         Console.WriteLine("Пожалуйста, введите число!");
                         userAnswer = GetValidInput();
                     }
-                    var newQuestion = new Question(userQuestion, int.Parse(userAnswer));
-                    questions.Add(newQuestion);
-                    var line = $"{userQuestion}#{userAnswer}";
-                    FileSystem.Append(QuestionStorage.pathForQuestion, line);
+                    var newQuestion = new Question(userQuestionText, int.Parse(userAnswer));
+                    var currentQuestions = QuestionStorage.GetQuestionList();
+                    currentQuestions.Add(newQuestion);
+                  
+                    QuestionStorage.RecordQuestionsToStorage(currentQuestions);
+
+                    Console.WriteLine("Вопрос успешно добавлен!");
                 }
 
                 Console.WriteLine($"{uzver.Name},Хотите удалить вопрос из базы?");
@@ -84,7 +87,6 @@ namespace GeniusIdiotConsoleApp
                         if (index >= 0 && index < currentQuestions.Count)
                         {
                             currentQuestions.RemoveAt(index);
-                            QuestionStorage.ClearQuestionsStorage(QuestionStorage.pathForQuestion);
                             QuestionStorage.RecordQuestionsToStorage(currentQuestions);
                             Console.WriteLine("Вопрос успешно удален!");
                         }
@@ -105,7 +107,6 @@ namespace GeniusIdiotConsoleApp
                 }
             }
         }
-        //вот эти 2 метода не трогаю,т.к. они у меня взаимодейтсвуют с консолью
         public static string CheckForNullorWhiteSpace(string input)
         {
             while (string.IsNullOrWhiteSpace(input))

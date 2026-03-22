@@ -1,19 +1,21 @@
-﻿namespace GeniusIdiot.Library
+﻿using Newtonsoft.Json;
+namespace GeniusIdiot.Library
 {
     public class UsersResultStorage
 
     {
-        static string path = "note.txt"; 
+        static string path = "results.json"; 
         
-          public static void GetCorrectRightAnswers(string input,int currentQuestionAnswer )
+          public static void GetCorrectRightAnswers(string input,int currentQuestionAnswer,User user )
          {
-             var userAnswer = int.Parse(input);
+             
              if(!Check.CheckDigit(input))
                 return;
+            var userAnswer = int.Parse(input);
 
-             if (userAnswer == currentQuestionAnswer)
+            if (userAnswer == currentQuestionAnswer)
              {
-                 User.CorrectRightAnswers++;
+                 user.CorrectRightAnswers++;
              }
          }
            
@@ -43,20 +45,40 @@
             };
             return diagnoses;
         }
+        public static List<User> GetAllResults()
+        {
+            if (!File.Exists(path))
+            {
+                return new List<User>();
+            }
+            var json = FileSystem.Read(path);
+            var results = JsonConvert.DeserializeObject<List<User>>(json);
+            if (results == null)
+            {
+               return new List<User>();
+            }
+            return results;
+        }
         public static void CreateTable(string userName, int correctAnswersCount, string diagnosesUserResult)
         {
-            var path = "note.txt";
-            if (FileSystem.IsEmpty(path))
+            var path = "results.json";
+            var allResults = GetAllResults();
+            var newUser = new User(userName)
             {
-                var header = string.Format("|| {0,-25} || {1,-25} || {2,-15} ||", "ФИО", "Кол-во ответов", "Диагноз");
-                FileSystem.Append(path, header);
-            }
-            var userDataForTable = string.Format("|| {0,-25} || {1,-25} || {2,-10} ||", userName, correctAnswersCount, diagnosesUserResult);
-            FileSystem.Append(path, userDataForTable);
+                CorrectRightAnswers = correctAnswersCount,
+                Diagnosis = diagnosesUserResult
+            };
+            allResults.Add(newUser);
+            var json = JsonConvert.SerializeObject(allResults, Formatting.Indented);
+            FileSystem.Append(path, json);
+
         }
         public static string WatchResultTable()
         {
-            return FileSystem.Read(path);
+            var results = GetAllResults();
+            var header = string.Format("|| {0,-25} || {1,-25} || {2,-25} ||\n", "ФИО", "Кол-во ответов", "Диагноз");
+            var rows = results.Select(u=>string.Format("|| {0,-25} || {1,-25} || {2,-25} ||\n",u.Name, u.CorrectRightAnswers, u.Diagnosis));
+           return header + string.Join("", rows); 
         }
     }
 }
